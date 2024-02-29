@@ -1,0 +1,7 @@
+{
+  "name": "commandes",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
