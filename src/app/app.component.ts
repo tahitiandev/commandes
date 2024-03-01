@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { FirestoreService } from './services/firestore.service';
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html',
@@ -14,5 +15,15 @@ export class AppComponent {
     { title: 'Spam', url: '/folder/spam', icon: 'warning' },
   ];
   public labels = ['Family', 'Friends', 'Notes', 'Work', 'Travel', 'Reminders'];
-  constructor() {}
+  constructor(private firestore : FirestoreService) {
+    this.sendDataToFirestore()
+  }
+
+  async sendDataToFirestore() {
+    await this.firestore.post('test', {
+      aa: '1',
+      bb: '2'
+    }, '456');
+  }
+
 }
