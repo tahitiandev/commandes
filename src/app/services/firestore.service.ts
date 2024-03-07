@@ -14,7 +14,7 @@ export class FirestoreService {
   public async post(collectionName : string, data : any, id : string){
 
     const firebaseApp = initializeApp(environment.firebaseConfig);
-    const db = getFirestore(firebaseApp)
+    const db = getFirestore(firebaseApp);
 
     await setDoc(doc(db, collectionName, id), data);
     

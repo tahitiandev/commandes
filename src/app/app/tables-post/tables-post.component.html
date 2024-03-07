@@ -1,0 +1,16 @@
+<form [formGroup]="formgroup" (ngSubmit)="post()">
+  
+  <h3>Ajouter une table</h3>
+
+  <ion-item>
+    <ion-input label="Numéro" formControlName="numero" labelPlacement="floating" placeholder="Enter text"></ion-input>
+  </ion-item><br>
+
+  <ion-checkbox labelPlacement="end" formControlName="isActif"> Actif </ion-checkbox>
+
+  <div>
+    <ion-button color="danger" (click)="annuler()">Annuler</ion-button>
+    <ion-button color="primary"  type="submit">Ajouter</ion-button>
+  </div>
+
+</form>

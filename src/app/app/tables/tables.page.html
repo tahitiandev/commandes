@@ -1,0 +1,45 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+        
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+
+    <ion-title>Configuration des tables</ion-title>
+    
+  </ion-toolbar>
+</ion-header>
+<ion-content [fullscreen]="true">
+  <ion-list *ngIf="!isPostTable">
+    <ion-item-sliding *ngFor="let table of tables">
+      <ion-item button>
+        <ion-label>
+          <h3 style="display: inline-block; margin-right: 10px;">
+            Table n° {{ table.numero }}
+          </h3>
+        </ion-label>
+        <!-- Ajout de la checkbox -->
+        <ion-checkbox [(ngModel)]="table.isActif"></ion-checkbox>
+      </ion-item>
+      <ion-item-options side="start">
+        <ion-item-option style="background: rgb(156, 46, 46);">
+          Supprimer    
+        </ion-item-option>
+      </ion-item-options>
+      <ion-item-options side="end">
+        <ion-item-option (click)="putIsActif(table)">
+          {{ table.isActif ? "Désactiver" : "Activer" }}    
+        </ion-item-option>
+      </ion-item-options>
+    </ion-item-sliding>
+  </ion-list>
+
+  <div class="button-add-table" *ngIf="!isPostTable">
+    <ion-button color="primary" (click)="setIsPostTable()">Ajouter</ion-button>
+  </div>
+
+  <app-tables-post *ngIf="isPostTable"
+                 (tableOutput)="post($event)"
+                 (annulerOutput)="setIsPostTable()"
+                 [numeroTable]="numeroTable"></app-tables-post>
+</ion-content>

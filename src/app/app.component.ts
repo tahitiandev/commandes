@@ -7,23 +7,19 @@ import { FirestoreService } from './services/firestore.service';
 })
 export class AppComponent {
   public appPages = [
-    { title: 'Inbox', url: '/folder/inbox', icon: 'mail' },
-    { title: 'Outbox', url: '/folder/outbox', icon: 'paper-plane' },
-    { title: 'Favorites', url: '/folder/favorites', icon: 'heart' },
-    { title: 'Archived', url: '/folder/archived', icon: 'archive' },
-    { title: 'Trash', url: '/folder/trash', icon: 'trash' },
-    { title: 'Spam', url: '/folder/spam', icon: 'warning' },
+    { title: 'Tables', url: 'tables', icon: 'mail' },
+    { title: 'Prise de commande', url: 'prise-de-commande', icon: 'mail' },
   ];
   public labels = ['Family', 'Friends', 'Notes', 'Work', 'Travel', 'Reminders'];
   constructor(private firestore : FirestoreService) {
-    this.sendDataToFirestore()
+
   }
 
-  async sendDataToFirestore() {
-    await this.firestore.post('test', {
-      aa: '1',
-      bb: '2'
-    }, '456');
-  }
+  // async sendDataToFirestore() {
+  //   await this.firestore.post('test', {
+  //     aa: '1',
+  //     bb: '2'
+  //   }, '456');
+  // }
 
 }
