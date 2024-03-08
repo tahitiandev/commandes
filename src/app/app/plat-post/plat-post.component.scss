@@ -1,0 +1,29 @@
+form {
+    width: 80%;
+    margin: auto;
+    margin-top: 10%;
+    padding: 3%;
+    background: rgb(27, 27, 51);
+    opacity: 0.8;
+    position: relative; /* Ajouter cette ligne pour positionner les boutons relativement au formulaire */
+  }
+  
+  h3 {
+    text-align: center;
+  }
+  
+  ion-checkbox {
+    margin-bottom: 30px; /* Ajout de marge inférieure à la case à cocher */
+  }
+  
+  /* Nouvelles règles CSS pour les boutons */
+  div {
+    position: absolute; /* Positionnement absolu pour les boutons */
+    bottom: 10px; /* Distance depuis le bas */
+    right: 10px; /* Distance depuis la droite */
+  }
+  
+  ion-button {
+    margin-left: 5px; /* Espacement entre les boutons */
+  }
+  

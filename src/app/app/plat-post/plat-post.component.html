@@ -1,0 +1,21 @@
+<form [formGroup]="formgroup" (ngSubmit)="post()">
+  
+  <h3>Ajouter un plat</h3>
+
+  <ion-item>
+    <ion-input label="Intitulé" formControlName="intitule" labelPlacement="floating" placeholder="Enter text"></ion-input>
+  </ion-item><br>
+  <ion-item>
+    <ion-input label="Description" formControlName="description" labelPlacement="floating" placeholder="Enter text"></ion-input>
+  </ion-item><br>
+  <ion-item>
+    <ion-input label="prix" formControlName="prix" labelPlacement="floating" placeholder="Enter text"></ion-input>
+  </ion-item><br>
+  <ion-checkbox labelPlacement="end" formControlName="isActif"> Actif </ion-checkbox>
+
+  <div>
+    <ion-button color="danger" (click)="annuler()">Annuler</ion-button>
+    <ion-button color="primary"  type="submit">Ajouter</ion-button>
+  </div>
+
+</form>

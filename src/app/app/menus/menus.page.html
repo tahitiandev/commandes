@@ -1,0 +1,31 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>menus</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-list *ngIf="!isModePost">
+    <ion-item *ngFor="let plat of plats">
+      <ion-thumbnail slot="start">
+        <img src="" alt="Photo de ">
+      </ion-thumbnail>
+      <ion-label>
+        <h2>{{ plat.libelle }}</h2>
+        <p>{{ plat.description }}</p>
+        <p>Prix: {{ plat.prix }} xpf</p>
+      </ion-label>
+      <ion-checkbox [(ngModel)]="plat.isActif"></ion-checkbox> 
+    </ion-item>
+  </ion-list>
+
+  <app-plat-post *ngIf="isModePost"
+                  (platOutput)="post($event)"
+                  (annulerOutput)="setIsModePost()"></app-plat-post>
+
+  <div class="button-add">
+    <ion-button color="primary" (click)="setIsModePost()">Ajouter</ion-button>
+  </div>
+
+
+</ion-content>

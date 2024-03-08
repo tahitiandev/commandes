@@ -40,7 +40,7 @@ export class TablesPostComponent  implements OnInit {
   }
 
   annuler(){
-    this.annulerOutput.emit();
+    this.annulerOutput.emit('test');
   }
 
 }

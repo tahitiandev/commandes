@@ -18,6 +18,10 @@ const routes: Routes = [
   {
     path: 'prise-de-commande',
     loadChildren: () => import('./app/prise-de-commande/prise-de-commande.module').then( m => m.PriseDeCommandePageModule)
+  },
+  {
+    path: 'menus',
+    loadChildren: () => import('./app/menus/menus.module').then( m => m.MenusPageModule)
   }
 ];
 
