@@ -11,10 +11,10 @@
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <ion-list *ngIf="!isModePost && !isModePut">
+  <ion-list *ngIf="!isModePost && !isModePut && !isModeImage">
     <ion-item *ngFor="let plat of plats" (click)="put(plat)">
       <ion-thumbnail slot="start">
-        <img src="" alt="Photo de ">
+        <img (click)="setIsModeImage()" src="https://firebasestorage.googleapis.com/v0/b/commande-18cb6.appspot.com/o/images.png?alt=media&token=0713faac-fc30-4cdb-a289-45836cc0573a" alt="Photo de ">
       </ion-thumbnail>
       <ion-label>
         <h2>{{ plat.libelle }}</h2>
@@ -33,7 +33,10 @@
         [platInput]="platupdate"
         (annulerOuput)="setIsModePut()"></app-plat-put>
 
-  <div class="button-add" *ngIf="!isModePost && !isModePut">
+  <app-plat-image *ngIf="isModeImage"
+                  (fermerOutput)="setIsModeImage()"></app-plat-image>
+
+  <div class="button-add" *ngIf="!isModePost && !isModePut && !isModeImage">
     <ion-button color="primary" (click)="setIsModePost()">Ajouter</ion-button>
   </div>
 

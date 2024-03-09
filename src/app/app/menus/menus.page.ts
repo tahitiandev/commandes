@@ -22,6 +22,7 @@ export class MenusPage implements OnInit {
   plats : Array<Plats> = [];
   isModePost = false;
   isModePut = false;
+  isModeImage = false;
   platupdate : any;
 
   constructor(private utility : UtilityService,
@@ -43,6 +44,10 @@ export class MenusPage implements OnInit {
 
   setIsModePut(){
     this.isModePut = !this.isModePut;
+  }
+
+  setIsModeImage(){
+    this.isModeImage = !this.isModeImage;
   }
 
   async post(response : menuResponse){
