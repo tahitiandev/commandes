@@ -85,16 +85,18 @@ export class PlatPutComponent  implements OnInit {
           text: 'Valider',
           handler: async (result : any) => {
 
-            var id = this.utility.generateKey();
-
-            await this.firestore.post(
-              CollectionName.Familles,
-              {
-                id : id,
-                libelle : result.libelle
-              },
-              id
-            )            
+            if(result.libelle !== ""){
+              var id = this.utility.generateKey();
+  
+              await this.firestore.post(
+                CollectionName.Familles,
+                {
+                  id : id,
+                  libelle : result.libelle
+                },
+                id
+              )            
+            }          
 
           }
         }
