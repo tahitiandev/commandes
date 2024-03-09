@@ -1,0 +1,13 @@
+h2{
+    text-align: center;
+}
+
+div {
+    display: block; /* Positionnement absolu pour les boutons */
+    float: right;
+    margin-top: 20px;
+}
+
+ion-button {
+   margin-left: 5px; /* Espacement entre les boutons */
+}

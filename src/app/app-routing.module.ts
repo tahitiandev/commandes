@@ -20,6 +20,10 @@ const routes: Routes = [
     loadChildren: () => import('./app/prise-de-commande/prise-de-commande.module').then( m => m.PriseDeCommandePageModule)
   },
   {
+    path: 'prise-de-commande/:id',
+    loadChildren: () => import('./app/prise-de-commande/prise-de-commande.module').then( m => m.PriseDeCommandePageModule)
+  },
+  {
     path: 'menus',
     loadChildren: () => import('./app/menus/menus.module').then( m => m.MenusPageModule)
   }

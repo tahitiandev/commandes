@@ -1,0 +1,15 @@
+<form [formGroup]="formgroup" (ngSubmit)="valider()">
+
+<h2>{{ platInput.libelle }}</h2>
+
+<ion-list>
+  <ion-item>
+    <ion-input formControlName="quantite" label="Quantité" type="number"></ion-input>
+  </ion-item>
+  <div>
+    <ion-button color="danger" (click)="fermer()">Annuler</ion-button>
+    <ion-button color="primary"  type="submit">Ajouter</ion-button>
+  </div>
+</ion-list>
+
+</form>

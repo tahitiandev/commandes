@@ -11,9 +11,26 @@
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">prise-de-commande</ion-title>
-    </ion-toolbar>
-  </ion-header>
+  
+  <ion-list *ngIf="!isModeImage && !isSetQuantite">
+    <ion-item *ngFor="let plat of plats" style="cursor: pointer;" (click)="setQuantite(plat)">
+      <ion-thumbnail slot="start">
+        <img (click)="setIsModeImage()" src="https://firebasestorage.googleapis.com/v0/b/commande-18cb6.appspot.com/o/images.png?alt=media&token=0713faac-fc30-4cdb-a289-45836cc0573a" alt="Photo de ">
+      </ion-thumbnail>
+      <ion-label>
+        <h2>{{ plat.libelle }}</h2>
+        <p>{{ plat.description }}</p>
+      </ion-label>
+      <p>{{ plat.prix }} xpf</p>
+    </ion-item>
+  </ion-list>
+
+  <app-plat-image *ngIf="isModeImage"
+                  (fermerOutput)="setIsModeImage()"></app-plat-image>
+  
+  <app-prise-de-commande-quantite *ngIf="isSetQuantite"
+                                  [platInput]="plat"
+                                  [tableIdInput]="tableid"
+                                  (fermerOuput)="setIsSetQuantite()"></app-prise-de-commande-quantite>
+
 </ion-content>
