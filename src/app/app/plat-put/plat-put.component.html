@@ -1,6 +1,6 @@
-<form [formGroup]="formgroup" (ngSubmit)="post()">
+<form [formGroup]="formgroup" (ngSubmit)="valider()">
   
-  <h3>Ajouter un plat</h3>
+  <h3>Mettre à jour un plat</h3>
 
   <ion-item>
     <ion-input label="Intitulé" formControlName="intitule" labelPlacement="floating" placeholder="Enter text"></ion-input>
@@ -13,7 +13,7 @@
   </ion-item><br>
 
   <ion-item>
-    <ion-select formControlName="prix"  aria-label="Famille" interface="popover" placeholder="Famille" style="width: 10%;">
+    <ion-select formControlName="famille"  aria-label="Famille" interface="popover" placeholder="Famille" style="width: 10%;">
       <ion-select-option value="grillade">Grillade</ion-select-option>
       <ion-select-option value="poisson">Poissons</ion-select-option>
     </ion-select>
@@ -28,7 +28,7 @@
 
   <div>
     <ion-button color="danger" (click)="annuler()">Annuler</ion-button>
-    <ion-button color="primary"  type="submit">Ajouter</ion-button>
+    <ion-button color="primary"  type="submit">Valider</ion-button>
   </div>
 
 </form>

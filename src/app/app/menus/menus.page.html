@@ -1,12 +1,18 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title>menus</ion-title>
+        
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+
+    <ion-title>Menus</ion-title>
+    
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <ion-list *ngIf="!isModePost">
-    <ion-item *ngFor="let plat of plats">
+  <ion-list *ngIf="!isModePost && !isModePut">
+    <ion-item *ngFor="let plat of plats" (click)="put(plat)">
       <ion-thumbnail slot="start">
         <img src="" alt="Photo de ">
       </ion-thumbnail>
@@ -22,8 +28,12 @@
   <app-plat-post *ngIf="isModePost"
                   (platOutput)="post($event)"
                   (annulerOutput)="setIsModePost()"></app-plat-post>
+  
+  <app-plat-put *ngIf="isModePut"
+        [platInput]="platupdate"
+        (annulerOuput)="setIsModePut()"></app-plat-put>
 
-  <div class="button-add">
+  <div class="button-add" *ngIf="!isModePost && !isModePut">
     <ion-button color="primary" (click)="setIsModePost()">Ajouter</ion-button>
   </div>
 

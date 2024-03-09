@@ -8,6 +8,7 @@ import { MenusPageRoutingModule } from './menus-routing.module';
 
 import { MenusPage } from './menus.page';
 import { PlatPostComponent } from '../plat-post/plat-post.component';
+import { PlatPutComponent } from '../plat-put/plat-put.component';
 
 @NgModule({
   imports: [
@@ -18,6 +19,6 @@ import { PlatPostComponent } from '../plat-post/plat-post.component';
     ReactiveFormsModule,
     FormsModule
   ],
-  declarations: [MenusPage, PlatPostComponent]
+  declarations: [MenusPage, PlatPostComponent, PlatPutComponent]
 })
 export class MenusPageModule {}

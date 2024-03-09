@@ -9,6 +9,7 @@ interface menuResponse{
   description : string;
   prix : number;
   isActif : boolean;
+  famille : string;
 }
 
 @Component({
@@ -20,6 +21,8 @@ export class MenusPage implements OnInit {
 
   plats : Array<Plats> = [];
   isModePost = false;
+  isModePut = false;
+  platupdate : any;
 
   constructor(private utility : UtilityService,
               private firestore : FirestoreService) { }
@@ -38,6 +41,10 @@ export class MenusPage implements OnInit {
     this.isModePost = !this.isModePost;
   }
 
+  setIsModePut(){
+    this.isModePut = !this.isModePut;
+  }
+
   async post(response : menuResponse){
 
     this.setIsModePost();
@@ -51,6 +58,7 @@ export class MenusPage implements OnInit {
       photo : '',
       prix : response.prix,
       isActif : response.isActif,
+      famille : response.famille,
       isFirebase : false,
       createdOn : new Date(),
       createdBy : '0'
@@ -61,6 +69,11 @@ export class MenusPage implements OnInit {
       plat,
       plat.id.toString()
     )
+  }
+
+  put(plat : Plats){
+    this.platupdate = plat;
+    this.isModePut = !this.isModePut;    
   }
 
 

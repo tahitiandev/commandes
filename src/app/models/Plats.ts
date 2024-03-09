@@ -4,6 +4,7 @@ export interface Plats{
     description : string;
     photo : string;
     prix : number;
+    famille : string;
     isActif : boolean;
     isFirebase : boolean;
     createdOn : Date;

@@ -24,7 +24,8 @@ export class PlatPostComponent  implements OnInit {
       intitule : '',
       description :  '',
       prix : 0,
-      isActif : true
+      isActif : true,
+      famille : ''
     })
   }
 
@@ -34,7 +35,8 @@ export class PlatPostComponent  implements OnInit {
       intitule : '',
       description :  '',
       prix : 0,
-      isActif : true
+      isActif : true,
+      famille : ''
     })
   }
 
