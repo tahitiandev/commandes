@@ -1,4 +1,5 @@
 export enum CollectionName {
+    Familles = "Familles",
+    Plats = "Plats",
     Tables = "Tables",
-    Plats = "Plats",    
 }

@@ -8,8 +8,8 @@ import { FirestoreService } from './services/firestore.service';
 export class AppComponent {
   public appPages = [
     { title: 'Tables', url: 'tables', icon: 'mail' },
-    { title: 'Prise de commande', url: 'prise-de-commande', icon: 'mail' },
     { title: 'Menu', url: 'menus', icon: 'mail' },
+    { title: 'Prise de commande', url: 'prise-de-commande', icon: 'mail' },
   ];
   public labels = ['Family', 'Friends', 'Notes', 'Work', 'Travel', 'Reminders'];
   constructor(private firestore : FirestoreService) {
