@@ -12,22 +12,32 @@ import { FirestoreService } from 'src/app/services/firestore.service';
 export class PriseDeCommandePage implements OnInit {
 
   plats : any;
+  commandes : Array<any> = [];
   isSetQuantite = false;
   isModeImage = false;
   plat : any;
   tableid = 0;
+  compteurPanier = 0;
 
   constructor(private firestore : FirestoreService,
               private route : ActivatedRoute) { }
 
   ngOnInit() {
-    this.getPlats();
     this.tableid = this.route.snapshot.params['id'];
+    this.getPlats();
+    this.getCommandes();
   }
 
   async getPlats(){
     (await this.firestore.getAll(CollectionName.Plats)).subscribe((plats : any) => {
       this.plats = plats.filter((plat:any) => plat.isActif)
+    });
+  }
+
+  async getCommandes(){
+    (await this.firestore.getAll(CollectionName.Commandes)).subscribe((commandes : any) => {
+      this.commandes = commandes.filter((commande:any) => commande.tableid === this.tableid && commande.isActif);
+      this.compteurPanier = this.commandes.length;
     });
   }
 
