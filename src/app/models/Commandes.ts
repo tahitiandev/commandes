@@ -4,4 +4,5 @@ export interface Commandes{
     quantite : number;
     numeroTable : string;
     isActif : boolean;
+    isPrepare : boolean;
 }

@@ -9,6 +9,7 @@ export class AppComponent {
     { title: 'Tables', url: 'tables', icon: 'mail' },
     { title: 'Menu', url: 'menus', icon: 'mail' },
     { title: 'Prise de commande', url: 'comptoir', icon: 'mail' },
+    { title: 'Préparation', url: 'preparations', icon: 'mail' },
   ];
   constructor() {  }
 

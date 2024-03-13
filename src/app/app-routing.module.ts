@@ -30,6 +30,10 @@ const routes: Routes = [
   {
     path: 'comptoir',
     loadChildren: () => import('./app/prise-de-commande-comptoir/prise-de-commande-comptoir.module').then( m => m.PriseDeCommandeComptoirPageModule)
+  },
+  {
+    path: 'preparations',
+    loadChildren: () => import('./app/preparations/preparations.module').then( m => m.PreparationsPageModule)
   }
 ];
 
