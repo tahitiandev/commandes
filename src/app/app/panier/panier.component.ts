@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { CollectionName } from 'src/app/enums/CollectionName';
 import { Commandes } from 'src/app/models/Commandes';
 import { Plats } from 'src/app/models/Plats';
@@ -12,6 +12,7 @@ import { FirestoreService } from 'src/app/services/firestore.service';
 export class PanierComponent  implements OnInit {
 
   @Input() commandes : any;
+  @Output() closeOuput = new EventEmitter<any>();
   plats : any;
 
   constructor(private firestore : FirestoreService) { }
@@ -38,6 +39,10 @@ export class PanierComponent  implements OnInit {
     var prix = plat?.prix === undefined ? 0 : plat?.prix;
     return prix * commande.quantite;
 
+  }
+
+  fermer(){
+    this.closeOuput.emit();
   }
 
 }

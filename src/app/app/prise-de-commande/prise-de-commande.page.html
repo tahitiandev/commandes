@@ -39,6 +39,7 @@
                                   (fermerOuput)="setIsSetQuantite()"></app-prise-de-commande-quantite>
 
    <app-panier *ngIf=" isPanier"
-                [commandes]="commandes"></app-panier>                               
+                [commandes]="commandes"
+                (closeOuput)="setIsPanier()"></app-panier>                               
 
 </ion-content>
