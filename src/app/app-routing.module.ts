@@ -34,6 +34,10 @@ const routes: Routes = [
   {
     path: 'preparations',
     loadChildren: () => import('./app/preparations/preparations.module').then( m => m.PreparationsPageModule)
+  },
+  {
+    path: 'servir',
+    loadChildren: () => import('./app/servir/servir.module').then( m => m.ServirPageModule)
   }
 ];
 

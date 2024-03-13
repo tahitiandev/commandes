@@ -5,4 +5,5 @@ export interface Commandes{
     numeroTable : string;
     isActif : boolean;
     isPrepare : boolean;
+    isLivre : boolean;
 }

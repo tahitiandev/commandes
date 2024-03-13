@@ -5,11 +5,11 @@ import { Plats } from 'src/app/models/Plats';
 import { FirestoreService } from 'src/app/services/firestore.service';
 
 @Component({
-  selector: 'app-preparations',
-  templateUrl: './preparations.page.html',
-  styleUrls: ['./preparations.page.scss'],
+  selector: 'app-servir',
+  templateUrl: './servir.page.html',
+  styleUrls: ['./servir.page.scss'],
 })
-export class PreparationsPage implements OnInit {
+export class ServirPage implements OnInit {
 
   commandes : Array<Commandes> = [];
   plats : Array<Plats> = [];
@@ -23,7 +23,7 @@ export class PreparationsPage implements OnInit {
 
   async getCommandes(){
     (await this.firestore.getAll(CollectionName.Commandes)).subscribe((commandes : any) => {
-      this.commandes = commandes.filter((commande:any) => commande.isActif && !commande.isPrepare);
+      this.commandes = commandes.filter((commande:any) => commande.isActif && commande.isPrepare && !commande.isLivre);
     });
   }
 
@@ -42,11 +42,12 @@ export class PreparationsPage implements OnInit {
   }
 
   terminer(commande : Commandes){
-    commande.isPrepare = true;
+    commande.isLivre = true;
     this.firestore.put(
       CollectionName.Commandes,
       commande.id,
       commande
     );
   }
+
 }
