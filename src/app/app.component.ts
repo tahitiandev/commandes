@@ -5,9 +5,12 @@ import { Component } from '@angular/core';
   styleUrls: ['app.component.scss'],
 })
 export class AppComponent {
-  public appPages = [
+  public appPagesSetting = [
     { title: 'Tables', url: 'tables', icon: 'mail' },
     { title: 'Menu', url: 'menus', icon: 'mail' },
+  ];
+
+  public appPagesCommande = [
     { title: 'Prise de commande', url: 'comptoir', icon: 'mail' },
     { title: 'Préparation', url: 'preparations', icon: 'mail' },
     { title: 'Servir', url: 'servir', icon: 'mail' },
