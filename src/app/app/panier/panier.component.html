@@ -4,7 +4,7 @@
     <ion-list lines="inset">
       <ion-item-sliding *ngFor="let commande of commandes">
       <ion-item>
-        <ion-label>{{ getLibellePlatById(commande.platid) }} x {{ commande.quantite}} </ion-label>
+        <ion-label>{{ commande.platid ? getLibellePlatById(commande.platid) : '' }} x {{ commande.quantite }} </ion-label>
         {{ calculeTotalLigne(commande) }} xpf
       </ion-item>
       <ion-item-options side="end">
@@ -14,8 +14,12 @@
     </ion-item-sliding>
     </ion-list>
   </div>
+  
+  <h4 style="text-align: right; padding-right: 2%;">Total : {{ calculeTotal() }} xpf</h4>
 
   <div class="button">
     <ion-button color="primary" (click)="fermer()">Revenir au menu</ion-button>
+    <ion-button color="warning" (click)="valider()">Valider</ion-button>
   </div>
+
 </div>

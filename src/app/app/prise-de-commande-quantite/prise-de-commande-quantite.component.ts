@@ -39,13 +39,13 @@ export class PriseDeCommandeQuantiteComponent  implements OnInit {
   async valider(){
     var value = this.formgroup.value;
     var id = this.utility.generateKey();
-    console.log(value)
+
     var commande : Commandes = {
       id : id,
      platid : this.platInput.id,
      quantite : value.quantite === null ? 1 : value.quantite,
-     tableid : this.tableIdInput === undefined ? 0 : this.tableIdInput,
-     isActif :  true 
+     numeroTable : this.tableIdInput === undefined ? 0 : this.tableIdInput,
+     isActif :  false 
     }
 
     await this.firestore.post(

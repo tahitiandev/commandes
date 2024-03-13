@@ -16,6 +16,8 @@
 </ion-header>
 
 <ion-content [fullscreen]="true">
+
+  <h3 style="text-align: center;">Table n° {{ tablenumero }}</h3>
   
   <ion-list *ngIf="!isModeImage && !isSetQuantite && !isPanier">
     <ion-item *ngFor="let plat of plats" style="cursor: pointer;" (click)="setQuantite(plat)">
@@ -35,7 +37,7 @@
   
   <app-prise-de-commande-quantite *ngIf="isSetQuantite"
                                   [platInput]="plat"
-                                  [tableIdInput]="tableid"
+                                  [tableIdInput]="tablenumero"
                                   (fermerOuput)="setIsSetQuantite()"></app-prise-de-commande-quantite>
 
    <app-panier *ngIf=" isPanier"

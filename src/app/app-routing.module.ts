@@ -26,6 +26,10 @@ const routes: Routes = [
   {
     path: 'menus',
     loadChildren: () => import('./app/menus/menus.module').then( m => m.MenusPageModule)
+  },
+  {
+    path: 'comptoir',
+    loadChildren: () => import('./app/prise-de-commande-comptoir/prise-de-commande-comptoir.module').then( m => m.PriseDeCommandeComptoirPageModule)
   }
 ];
 

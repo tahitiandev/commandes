@@ -36,7 +36,7 @@ export class PlatPutComponent  implements OnInit {
       description : this.platInput.description,
       prix : this.platInput.prix,
       famille : this.platInput.famille,
-      isActif : this.platInput.isActif
+      isActif : !this.platInput.isActif
     })
   }
 

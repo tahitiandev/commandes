@@ -2,6 +2,6 @@ export interface Commandes{
     id:string;
     platid : string;
     quantite : number;
-    tableid : string;
+    numeroTable : string;
     isActif : boolean;
 }

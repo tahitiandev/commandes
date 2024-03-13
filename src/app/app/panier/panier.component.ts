@@ -3,6 +3,7 @@ import { CollectionName } from 'src/app/enums/CollectionName';
 import { Commandes } from 'src/app/models/Commandes';
 import { Plats } from 'src/app/models/Plats';
 import { FirestoreService } from 'src/app/services/firestore.service';
+import { UtilityService } from 'src/app/services/utility.service';
 
 @Component({
   selector: 'app-panier',
@@ -11,11 +12,13 @@ import { FirestoreService } from 'src/app/services/firestore.service';
 })
 export class PanierComponent  implements OnInit {
 
-  @Input() commandes : any;
+  @Input() commandes : Array<Commandes> = [];
   @Output() closeOuput = new EventEmitter<any>();
   plats : any;
+  total = 0;
 
-  constructor(private firestore : FirestoreService) { }
+  constructor(private firestore : FirestoreService,
+              private utility : UtilityService) { }
 
   async ngOnInit() {
     await this.getPlats();
@@ -27,11 +30,13 @@ export class PanierComponent  implements OnInit {
     });
   }
 
-  getLibellePlatById(platid : any){
-    var plats : Array<Plats> = this.plats;
-    var plat : Plats | undefined = plats.find(plat => plat.id === platid);
-    return plat?.libelle;
-  }
+  getLibellePlatById(platid: any) {
+    if (!platid) return ""; // Vérifier si platid est défini
+
+    var plats: Array<Plats> = this.plats;
+    var plat: Plats | undefined = plats.find(plat => plat.id === platid);
+    return plat?.libelle || ""; // Retourner le libellé du plat ou une chaîne vide si le plat n'est pas trouvé
+}
 
   calculeTotalLigne(commande : Commandes){
     var plats : Array<Plats> = this.plats;
@@ -51,6 +56,38 @@ export class PanierComponent  implements OnInit {
       commande.id,
       commande
     )
+  }
+
+  calculeTotal(){
+    var commandes : Array<Commandes> = this.commandes;
+    var plats : Array<Plats> = this.plats;
+    var total = 0;
+
+    for(let commande of commandes){
+      var plat = plats.filter(plat => plat.id === commande.platid);
+      total += commande.quantite * plat[0].prix;
+    }
+
+    return total;
+}
+
+  valider(){
+
+    if(this.commandes.length > 0){
+
+      this.commandes.map(async(commande) => {
+        commande.isActif = true;
+        await this.firestore.put(
+          CollectionName.Commandes,
+          commande.id,
+          commande
+          )
+        });
+        this.utility.popMessage('Votre commande a bien été envoyée');
+        this.fermer();
+      }else{
+        this.fermer();
+      }
   }
 
 }
