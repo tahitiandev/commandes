@@ -28,7 +28,7 @@ export class PriseDeCommandeQuantiteComponent  implements OnInit {
 
   init(){
     this.formgroup = this.formbuilder.group({
-      quantite : 0
+      quantite : null
     })
   } 
 
@@ -43,7 +43,7 @@ export class PriseDeCommandeQuantiteComponent  implements OnInit {
     var commande : Commandes = {
       id : id,
      platid : this.platInput.id,
-     quantite : value.quantite,
+     quantite : value.quantite === null ? 1 : value.quantite,
      tableid : this.tableIdInput === undefined ? 0 : this.tableIdInput,
      isActif :  true 
     }
