@@ -7,8 +7,8 @@ import { IonicModule } from '@ionic/angular';
 import { PriseDeCommandePageRoutingModule } from './prise-de-commande-routing.module';
 
 import { PriseDeCommandePage } from './prise-de-commande.page';
-import { PlatImageComponent } from '../plat-image/plat-image.component';
 import { PriseDeCommandeQuantiteComponent } from '../prise-de-commande-quantite/prise-de-commande-quantite.component';
+import { PlatImage2Component } from '../plat-image2/plat-image2.component';
 
 @NgModule({
   imports: [
@@ -19,6 +19,6 @@ import { PriseDeCommandeQuantiteComponent } from '../prise-de-commande-quantite/
     ReactiveFormsModule,
     FormsModule
   ],
-  declarations: [PriseDeCommandePage, PlatImageComponent, PriseDeCommandeQuantiteComponent]
+  declarations: [PriseDeCommandePage, PlatImage2Component, PriseDeCommandeQuantiteComponent]
 })
 export class PriseDeCommandePageModule {}
