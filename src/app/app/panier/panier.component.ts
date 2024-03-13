@@ -45,4 +45,12 @@ export class PanierComponent  implements OnInit {
     this.closeOuput.emit();
   }
 
+  retirer(commande :  Commandes){
+    this.firestore.delete(
+      CollectionName.Commandes,
+      commande.id,
+      commande
+    )
+  }
+
 }
