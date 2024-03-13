@@ -15,6 +15,7 @@ export class PriseDeCommandePage implements OnInit {
   commandes : Array<any> = [];
   isSetQuantite = false;
   isModeImage = false;
+  isPanier = false;
   plat : any;
   tableid = 0;
   compteurPanier = 0;
@@ -47,6 +48,10 @@ export class PriseDeCommandePage implements OnInit {
 
   setIsSetQuantite(){
     this.isSetQuantite = !this.isSetQuantite;
+  }
+
+  setIsPanier(){
+    this.isPanier = !this.isPanier;
   }
 
   setQuantite(plat : Plats){

@@ -5,14 +5,19 @@
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
 
-    <ion-title>Prise de commande {{ compteurPanier }}</ion-title>
+    <ion-title>Prise de commande</ion-title>
+
+    <span (click)="setIsPanier()">
+      <span class="panier-value">{{ compteurPanier }}</span>
+      <ion-icon size="large" class="panier" name="bag-outline"></ion-icon>
+    </span>
     
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
   
-  <ion-list *ngIf="!isModeImage && !isSetQuantite">
+  <ion-list *ngIf="!isModeImage && !isSetQuantite && !isPanier">
     <ion-item *ngFor="let plat of plats" style="cursor: pointer;" (click)="setQuantite(plat)">
       <ion-thumbnail slot="start">
         <img (click)="setIsModeImage()" src="https://firebasestorage.googleapis.com/v0/b/commande-18cb6.appspot.com/o/images.png?alt=media&token=0713faac-fc30-4cdb-a289-45836cc0573a" alt="Photo de ">
@@ -32,5 +37,8 @@
                                   [platInput]="plat"
                                   [tableIdInput]="tableid"
                                   (fermerOuput)="setIsSetQuantite()"></app-prise-de-commande-quantite>
+
+   <app-panier *ngIf=" isPanier"
+                [commandes]="commandes"></app-panier>                               
 
 </ion-content>

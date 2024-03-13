@@ -1,3 +1,10 @@
-<p>
-  panier works!
-</p>
+<div>
+  <h3>Votre panier</h3>
+  <div>
+    <ion-list lines="inset">
+      <ion-item *ngFor="let commande of commandes">
+        <ion-label>{{ getLibellePlatById(commande.platid) }} x {{ commande.quantite}} </ion-label> {{ calculeTotalLigne(commande) }} xpf
+      </ion-item>
+    </ion-list>
+  </div>
+</div>

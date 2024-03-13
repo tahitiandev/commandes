@@ -9,6 +9,7 @@ import { PriseDeCommandePageRoutingModule } from './prise-de-commande-routing.mo
 import { PriseDeCommandePage } from './prise-de-commande.page';
 import { PriseDeCommandeQuantiteComponent } from '../prise-de-commande-quantite/prise-de-commande-quantite.component';
 import { PlatImage2Component } from '../plat-image2/plat-image2.component';
+import { PanierComponent } from '../panier/panier.component';
 
 @NgModule({
   imports: [
@@ -19,6 +20,6 @@ import { PlatImage2Component } from '../plat-image2/plat-image2.component';
     ReactiveFormsModule,
     FormsModule
   ],
-  declarations: [PriseDeCommandePage, PlatImage2Component, PriseDeCommandeQuantiteComponent]
+  declarations: [PriseDeCommandePage, PlatImage2Component, PriseDeCommandeQuantiteComponent, PanierComponent]
 })
 export class PriseDeCommandePageModule {}

@@ -1,0 +1,20 @@
+.panier{
+    position: absolute;
+    top: 10px;
+    right: 20px;
+    cursor: pointer;
+}
+
+.panier-value{
+    position: absolute;
+    top: 20px;
+    right: 40px;
+    background: red;
+    color: white;
+    font-weight: bold;
+    width: 30px;
+    height: 30px;line-height: 30px;
+    text-align: center;
+    border-radius: 100%;
+    cursor: pointer;
+}
