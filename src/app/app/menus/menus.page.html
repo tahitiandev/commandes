@@ -21,7 +21,7 @@
         <p>{{ plat.description }}</p>
         <p>Prix: {{ plat.prix }} xpf</p>
       </ion-label>
-      <ion-checkbox [(ngModel)]="plat.isActif"></ion-checkbox> 
+      <ion-checkbox [checked]="plat.isActif"></ion-checkbox> 
     </ion-item>
   </ion-list>
 

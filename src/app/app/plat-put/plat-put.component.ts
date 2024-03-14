@@ -36,7 +36,7 @@ export class PlatPutComponent  implements OnInit {
       description : this.platInput.description,
       prix : this.platInput.prix,
       famille : this.platInput.famille,
-      isActif : !this.platInput.isActif
+      isActif : this.platInput.isActif
     })
   }
 
@@ -47,6 +47,7 @@ export class PlatPutComponent  implements OnInit {
     plat.description = value.description;
     plat.prix = value.prix;
     plat.famille = value.famille;
+    plat.isActif = value.isActif;
     
     await this.firestore.put(
       CollectionName.Plats,
