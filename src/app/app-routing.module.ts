@@ -38,6 +38,10 @@ const routes: Routes = [
   {
     path: 'servir',
     loadChildren: () => import('./app/servir/servir.module').then( m => m.ServirPageModule)
+  },
+  {
+    path: 'commande-terminee',
+    loadChildren: () => import('./app/commande-terminee/commande-terminee.module').then( m => m.CommandeTermineePageModule)
   }
 ];
 

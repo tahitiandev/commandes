@@ -13,7 +13,8 @@ export class AppComponent {
   public appPagesCommande = [
     { title: 'Prise de commande', url: 'comptoir', icon: 'mail' },
     { title: 'Préparation', url: 'preparations', icon: 'mail' },
-    { title: 'Servir', url: 'servir', icon: 'mail' },
+    { title: 'Livraison', url: 'servir', icon: 'mail' },
+    { title: 'Terminée', url: 'commande-terminee', icon: 'mail' },
   ];
   constructor() {  }
 
