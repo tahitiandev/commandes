@@ -47,7 +47,8 @@ export class PriseDeCommandeQuantiteComponent  implements OnInit {
      numeroTable : this.tableIdInput === undefined ? 0 : this.tableIdInput,
      isActif :  false,
      isPrepare : false,
-     isLivre : false
+     isLivre : false,
+     isRegle : false
     }
 
     await this.firestore.post(

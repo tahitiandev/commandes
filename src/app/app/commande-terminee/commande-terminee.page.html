@@ -5,7 +5,7 @@
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
 
-    <ion-title>Commande terminée</ion-title>
+    <ion-title>Commande à régler</ion-title>
     
   </ion-toolbar>
 </ion-header>
@@ -17,6 +17,9 @@
       <ion-label>Table n°{{ commande.numeroTable }} - {{ commande.platid ? getLibellePlatById(commande.platid) : '' }} x {{ commande.quantite }} </ion-label>
     </ion-item>
     <ion-item-options side="end">
+      <ion-item-option color="success" (click)="regler(commande)">Régler</ion-item-option>
+    </ion-item-options>
+    <ion-item-options side="start">
       <ion-item-option color="success" (click)="passerEtapePreparation(commande)">Préparation</ion-item-option>
       <ion-item-option color="tertiary" (click)="passerEtapeLivraison(commande)">Livraison</ion-item-option>
     </ion-item-options>

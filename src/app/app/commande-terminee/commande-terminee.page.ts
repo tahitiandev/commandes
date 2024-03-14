@@ -23,7 +23,7 @@ export class CommandeTermineePage implements OnInit {
 
   async getCommandes(){
     (await this.firestore.getAll(CollectionName.Commandes)).subscribe((commandes : any) => {
-      this.commandes = commandes.filter((commande:any) => commande.isActif && commande.isPrepare && commande.isLivre);
+      this.commandes = commandes.filter((commande:any) => commande.isActif && commande.isPrepare && commande.isLivre && !commande.isRegle);
     });
   }
 
@@ -53,6 +53,15 @@ export class CommandeTermineePage implements OnInit {
 
   passerEtapeLivraison(commande : Commandes){
     commande.isLivre = false;
+    this.firestore.put(
+      CollectionName.Commandes,
+      commande.id,
+      commande
+    );
+  }
+
+  regler(commande : Commandes){
+    commande.isRegle = true;
     this.firestore.put(
       CollectionName.Commandes,
       commande.id,

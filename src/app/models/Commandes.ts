@@ -6,4 +6,5 @@ export interface Commandes{
     isActif : boolean;
     isPrepare : boolean;
     isLivre : boolean;
+    isRegle : boolean;
 }
