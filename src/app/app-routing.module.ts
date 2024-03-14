@@ -40,8 +40,12 @@ const routes: Routes = [
     loadChildren: () => import('./app/servir/servir.module').then( m => m.ServirPageModule)
   },
   {
-    path: 'a-regler',
-    loadChildren: () => import('./app/commande-terminee/commande-terminee.module').then( m => m.CommandeTermineePageModule)
+    path: 'regler',
+    loadChildren: () => import('./app/commande-a-regler/commande-a-regler.module').then( m => m.CommandeAReglerPageModule)
+  },
+  {
+    path: 'cloturer',
+    loadChildren: () => import('./app/commande-cloturee/commande-cloturee.module').then( m => m.CommandeClotureePageModule)
   }
 ];
 

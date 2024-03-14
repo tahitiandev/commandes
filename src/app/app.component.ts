@@ -14,7 +14,8 @@ export class AppComponent {
     { title: 'Prise de commande', url: 'comptoir', icon: 'mail' },
     { title: 'Préparation', url: 'preparations', icon: 'mail' },
     { title: 'Livraison', url: 'servir', icon: 'mail' },
-    { title: 'à Régler', url: 'a-regler', icon: 'mail' },
+    { title: 'Régler', url: 'regler', icon: 'mail' },
+    { title: 'Commande cloturée', url: 'cloturer', icon: 'mail' },
   ];
   constructor() {  }
 
