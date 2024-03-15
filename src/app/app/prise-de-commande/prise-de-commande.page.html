@@ -17,12 +17,13 @@
 
 <ion-content [fullscreen]="true">
 
-  <h3 style="text-align: center;">Table n° {{ tablenumero }}</h3>
+  <h3 *ngIf="!isModeImage && !isSetQuantite && !isPanier" style="text-align: center;">Table n° {{ tablenumero }}</h3>
   
+  <span *ngIf="!isModeImage && !isSetQuantite && !isPanier">
   <div *ngFor="let famille of familles">
     <h4 style="margin-left: 3%;">{{ famille.libelle }}</h4>
     
-    <ion-list *ngIf="!isModeImage && !isSetQuantite && !isPanier">
+    <ion-list>
       <span *ngFor="let plat of plats">
         <ion-item *ngIf="plat.famille === famille.libelle" style="cursor: pointer;" (click)="setQuantite(plat)">
           <ion-thumbnail slot="start">
@@ -37,6 +38,7 @@
       </span>
     </ion-list>
   </div>
+</span>
     
   <app-plat-image2 *ngIf="isModeImage"
                   (fermerOutput)="setIsModeImage()"></app-plat-image2>

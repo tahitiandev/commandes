@@ -38,24 +38,30 @@ export class PriseDeCommandeQuantiteComponent  implements OnInit {
 
   async valider(){
     var value = this.formgroup.value;
-    var id = this.utility.generateKey();
+    
+    for(var x = 0; x < value.quantite; x++){
+      
+      var id = this.utility.generateKey();
 
-    var commande : Commandes = {
-      id : id,
-     platid : this.platInput.id,
-     quantite : value.quantite === null ? 1 : value.quantite,
-     numeroTable : this.tableIdInput === undefined ? 0 : this.tableIdInput,
-     isActif :  false,
-     isPrepare : false,
-     isLivre : false,
-     isRegle : false
-    }
+      var commande : Commandes = {
+        id : id,
+        platid : this.platInput.id,
+        quantite : 1,
+        numeroTable : this.tableIdInput === undefined ? 0 : this.tableIdInput,
+        isActif :  false,
+        isPrepare : false,
+        isLivre : false,
+        isRegle : false
+      }
+        
+      await this.firestore.post(
+        CollectionName.Commandes,
+        commande,
+        id
+      )
 
-    await this.firestore.post(
-      CollectionName.Commandes,
-      commande,
-      id
-    )
+    } //for
+
     this.fermer();
   }
 
