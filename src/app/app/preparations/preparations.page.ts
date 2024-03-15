@@ -3,6 +3,7 @@ import { CollectionName } from 'src/app/enums/CollectionName';
 import { Commandes } from 'src/app/models/Commandes';
 import { Plats } from 'src/app/models/Plats';
 import { FirestoreService } from 'src/app/services/firestore.service';
+import { UtilityService } from 'src/app/services/utility.service';
 
 @Component({
   selector: 'app-preparations',
@@ -14,7 +15,8 @@ export class PreparationsPage implements OnInit {
   commandes : Array<Commandes> = [];
   plats : Array<Plats> = [];
 
-  constructor(private firestore : FirestoreService) { }
+  constructor(private firestore : FirestoreService,
+              private utility : UtilityService) { }
 
   async ngOnInit() {
     await this.getCommandes();
@@ -48,5 +50,9 @@ export class PreparationsPage implements OnInit {
       commande.id,
       commande
     );
+  }
+
+  voirCommentaire(commande : Commandes){
+    this.utility.popMessage(commande.commentaire);
   }
 }

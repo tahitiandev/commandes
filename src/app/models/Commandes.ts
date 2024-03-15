@@ -7,4 +7,6 @@ export interface Commandes{
     isPrepare : boolean;
     isLivre : boolean;
     isRegle : boolean;
+    commentaire : string;
+    createdOn : Date;
 }

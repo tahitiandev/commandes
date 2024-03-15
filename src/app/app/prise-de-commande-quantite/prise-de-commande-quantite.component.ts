@@ -28,7 +28,8 @@ export class PriseDeCommandeQuantiteComponent  implements OnInit {
 
   init(){
     this.formgroup = this.formbuilder.group({
-      quantite : null
+      quantite : null,
+      commentaire : ''
     })
   } 
 
@@ -38,8 +39,9 @@ export class PriseDeCommandeQuantiteComponent  implements OnInit {
 
   async valider(){
     var value = this.formgroup.value;
+    var quantite = value.quantite === null ? 1 : value.quantite;
     
-    for(var x = 0; x < value.quantite; x++){
+    for(var x = 0; x < quantite; x++){
       
       var id = this.utility.generateKey();
 
@@ -51,7 +53,9 @@ export class PriseDeCommandeQuantiteComponent  implements OnInit {
         isActif :  false,
         isPrepare : false,
         isLivre : false,
-        isRegle : false
+        isRegle : false,
+        commentaire : value.commentaire,
+        createdOn : new Date()
       }
         
       await this.firestore.post(

@@ -3,6 +3,7 @@ import { CollectionName } from 'src/app/enums/CollectionName';
 import { Commandes } from 'src/app/models/Commandes';
 import { Plats } from 'src/app/models/Plats';
 import { FirestoreService } from 'src/app/services/firestore.service';
+import { UtilityService } from 'src/app/services/utility.service';
 
 @Component({
   selector: 'app-servir',
@@ -14,7 +15,8 @@ export class ServirPage implements OnInit {
   commandes : Array<Commandes> = [];
   plats : Array<Plats> = [];
 
-  constructor(private firestore : FirestoreService) { }
+  constructor(private firestore : FirestoreService,
+              private utility : UtilityService) { }
 
   async ngOnInit() {
     await this.getCommandes();
@@ -31,6 +33,10 @@ export class ServirPage implements OnInit {
     (await this.firestore.getAll(CollectionName.Plats)).subscribe((plats : any) => {
       this.plats = plats.filter((plat:any) => plat.isActif)
     });
+  }
+
+  voirCommentaire(commande : Commandes){
+    this.utility.popMessage(commande.commentaire);
   }
 
   getLibellePlatById(platid: any) {
