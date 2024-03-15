@@ -19,19 +19,25 @@
 
   <h3 style="text-align: center;">Table n° {{ tablenumero }}</h3>
   
-  <ion-list *ngIf="!isModeImage && !isSetQuantite && !isPanier">
-    <ion-item *ngFor="let plat of plats" style="cursor: pointer;" (click)="setQuantite(plat)">
-      <ion-thumbnail slot="start">
-        <img (click)="setIsModeImage()" src="https://firebasestorage.googleapis.com/v0/b/commande-18cb6.appspot.com/o/images.png?alt=media&token=0713faac-fc30-4cdb-a289-45836cc0573a" alt="Photo de ">
-      </ion-thumbnail>
-      <ion-label>
-        <h2>{{ plat.libelle }}</h2>
-        <p>{{ plat.description }}</p>
-      </ion-label>
-      <p>{{ plat.prix }} xpf</p>
-    </ion-item>
-  </ion-list>
-
+  <div *ngFor="let famille of familles">
+    <h4 style="margin-left: 3%;">{{ famille.libelle }}</h4>
+    
+    <ion-list *ngIf="!isModeImage && !isSetQuantite && !isPanier">
+      <span *ngFor="let plat of plats">
+        <ion-item *ngIf="plat.famille === famille.libelle" style="cursor: pointer;" (click)="setQuantite(plat)">
+          <ion-thumbnail slot="start">
+            <img (click)="setIsModeImage()" src="https://firebasestorage.googleapis.com/v0/b/commande-18cb6.appspot.com/o/images.png?alt=media&token=0713faac-fc30-4cdb-a289-45836cc0573a" alt="Photo de ">
+          </ion-thumbnail>
+          <ion-label>
+            <h2>{{ plat.libelle }}</h2>
+            <p>{{ plat.description }}</p>
+          </ion-label>
+          <p>{{ plat.prix }} xpf</p>
+        </ion-item>
+      </span>
+    </ion-list>
+  </div>
+    
   <app-plat-image2 *ngIf="isModeImage"
                   (fermerOutput)="setIsModeImage()"></app-plat-image2>
   

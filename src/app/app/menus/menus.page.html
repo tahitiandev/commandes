@@ -11,19 +11,29 @@
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <ion-list *ngIf="!isModePost && !isModePut && !isModeImage">
-    <ion-item *ngFor="let plat of plats" (click)="put(plat)">
-      <ion-thumbnail slot="start">
-        <img (click)="setIsModeImage()" src="https://firebasestorage.googleapis.com/v0/b/commande-18cb6.appspot.com/o/images.png?alt=media&token=0713faac-fc30-4cdb-a289-45836cc0573a" alt="Photo de ">
-      </ion-thumbnail>
-      <ion-label>
-        <h2>{{ plat.libelle }}</h2>
-        <p>{{ plat.description }}</p>
-        <p>Prix: {{ plat.prix }} xpf</p>
-      </ion-label>
-      <ion-checkbox [checked]="plat.isActif"></ion-checkbox> 
-    </ion-item>
-  </ion-list>
+
+  <div *ngFor="let famille of familles">
+    <h4 style="margin-left: 3%;">{{ famille.libelle }}</h4>
+
+    <ion-list *ngIf="!isModePost && !isModePut && !isModeImage">
+      <span *ngFor="let plat of plats">
+      <ion-item *ngIf="plat.famille === famille.libelle" (click)="put(plat)">
+
+          <ion-thumbnail slot="start">
+            <img (click)="setIsModeImage()" src="https://firebasestorage.googleapis.com/v0/b/commande-18cb6.appspot.com/o/images.png?alt=media&token=0713faac-fc30-4cdb-a289-45836cc0573a" alt="Photo de ">
+          </ion-thumbnail>
+          <ion-label>
+            <h2>{{ plat.libelle }}</h2>
+            <p>{{ plat.description }}</p>
+            <p>Prix: {{ plat.prix }} xpf</p>
+          </ion-label>
+          <ion-checkbox [checked]="plat.isActif"></ion-checkbox> 
+        </ion-item>
+      </span>
+    </ion-list>
+      
+  </div>
+
 
   <app-plat-post *ngIf="isModePost"
                   (platOutput)="post($event)"

@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { NavController } from '@ionic/angular';
 import { CollectionName } from 'src/app/enums/CollectionName';
 import { Commandes } from 'src/app/models/Commandes';
+import { Familles } from 'src/app/models/Familles';
 import { Plats } from 'src/app/models/Plats';
 import { Settings } from 'src/app/models/Settings';
 import { FirestoreService } from 'src/app/services/firestore.service';
@@ -25,6 +26,7 @@ export class PriseDeCommandePage implements OnInit {
   token = "";
   compteurPanier = 0;
   settings : any;
+  familles : Array<Familles> = [];
 
   constructor(private firestore : FirestoreService,
               private utility : UtilityService,
@@ -37,6 +39,7 @@ export class PriseDeCommandePage implements OnInit {
     this.getSettings();
     this.getPlats();
     this.getCommandes();
+    this.getFamilles();
   }
   
   private async checkRoute(){
@@ -49,6 +52,12 @@ export class PriseDeCommandePage implements OnInit {
   async getPlats(){
     (await this.firestore.getAll(CollectionName.Plats)).subscribe((plats : any) => {
       this.plats = plats.filter((plat:any) => plat.isActif)
+    });
+  }
+
+  async getFamilles(){
+    (await this.firestore.getAll(CollectionName.Familles)).subscribe((familles : any) => {
+      this.familles = familles;
     });
   }
 
