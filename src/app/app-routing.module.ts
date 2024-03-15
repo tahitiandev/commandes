@@ -2,11 +2,11 @@ import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 
 const routes: Routes = [
-  {
-    path: '',
-    redirectTo: 'folder/Inbox',
-    pathMatch: 'full'
-  },
+  // {
+  //   path: '',
+  //   redirectTo: 'folder/Inbox',
+  //   pathMatch: 'full'
+  // },
   {
     path: 'folder/:id',
     loadChildren: () => import('./folder/folder.module').then( m => m.FolderPageModule)
@@ -20,7 +20,7 @@ const routes: Routes = [
     loadChildren: () => import('./app/prise-de-commande/prise-de-commande.module').then( m => m.PriseDeCommandePageModule)
   },
   {
-    path: 'prise-de-commande/:id',
+    path: 'prise-de-commande/:token/:id',
     loadChildren: () => import('./app/prise-de-commande/prise-de-commande.module').then( m => m.PriseDeCommandePageModule)
   },
   {
@@ -46,6 +46,19 @@ const routes: Routes = [
   {
     path: 'cloturer',
     loadChildren: () => import('./app/commande-cloturee/commande-cloturee.module').then( m => m.CommandeClotureePageModule)
+  },
+  {
+    path: 'settings',
+    loadChildren: () => import('./app/settings/settings.module').then( m => m.SettingsPageModule)
+  },
+  {
+    path: 'home',
+    loadChildren: () => import('./app/home/home.module').then( m => m.HomePageModule)
+  },
+  {
+    path: '',
+    loadChildren: () => import('./app/home/home.module').then( m => m.HomePageModule),
+    pathMatch: 'full'
   }
 ];
 

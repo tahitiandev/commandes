@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { NavController } from '@ionic/angular';
 import { CollectionName } from 'src/app/enums/CollectionName';
 import { FirestoreService } from 'src/app/services/firestore.service';
 
@@ -10,17 +11,32 @@ import { FirestoreService } from 'src/app/services/firestore.service';
 export class PriseDeCommandeComptoirPage implements OnInit {
 
   tables : any;
+  settings : any;
 
-  constructor(private firestore : FirestoreService) { }
+  constructor(private firestore : FirestoreService,
+              private navigate : NavController) { 
 
-  async ngOnInit() {
-    await this.getTables();
+  }
+
+  ngOnInit() {
+    this.getSettings();
+    this.getTables();
   }
 
   async getTables(){
     (await this.firestore.getAll(CollectionName.Tables)).subscribe((tables : any) => {
       this.tables = tables.filter((table:any) => table.isActif)
     });
+  }
+
+  async getSettings(){
+    (await this.firestore.getAll(CollectionName.Settings)).subscribe((settings : any) => {
+      this.settings = settings[0];
+    });
+  }
+
+  navitageToPriseDeCommande(numeroTable : any){
+    this.navigate.navigateRoot("prise-de-commande/" + this.settings.token + "/" + numeroTable);
   }
 
 

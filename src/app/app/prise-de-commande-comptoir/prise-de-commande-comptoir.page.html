@@ -13,7 +13,7 @@
 <ion-content [fullscreen]="true">
   <ion-list>
     <ion-item *ngFor="let table of tables">
-      <ion-label routerLink="../prise-de-commande/{{table.numero}}" style="cursor: pointer;">
+      <ion-label (click)="navitageToPriseDeCommande(table.numero)" style="cursor: pointer;">
         <h2>Table n°{{ table.numero }}</h2>
       </ion-label>
     </ion-item>

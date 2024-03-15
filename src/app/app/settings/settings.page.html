@@ -1,0 +1,33 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+        
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+
+    <ion-title>Parametres généraux</ion-title>
+    
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-list>
+    <!-- LISTE 1 -->
+      <ion-item button (click)="putEnvironnement(settings.environnement)"> 
+        <ion-label>
+          URL : {{ settings.environnement }}
+        </ion-label>
+      </ion-item>
+    
+    <!-- LISTE 2 -->
+    <ion-item button (click)="putToken()"> 
+      <ion-label>
+        Token : {{ settings.token }}
+      </ion-label>
+    </ion-item>
+
+
+
+
+  </ion-list>
+</ion-content>
