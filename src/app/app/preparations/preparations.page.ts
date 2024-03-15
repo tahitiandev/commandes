@@ -53,6 +53,8 @@ export class PreparationsPage implements OnInit {
   }
 
   voirCommentaire(commande : Commandes){
-    this.utility.popMessage(commande.commentaire);
+    if(commande.commentaire !== ''){
+      this.utility.popMessage(commande.commentaire);
+    }
   }
 }

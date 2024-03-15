@@ -36,7 +36,9 @@ export class ServirPage implements OnInit {
   }
 
   voirCommentaire(commande : Commandes){
-    this.utility.popMessage(commande.commentaire);
+    if(commande.commentaire !== ''){
+      this.utility.popMessage(commande.commentaire);
+    }
   }
 
   getLibellePlatById(platid: any) {
