@@ -22,7 +22,7 @@
         <ion-checkbox disabled="true" [checked]="table.isActif"></ion-checkbox>
       </ion-item>
       <ion-item-options side="start">
-        <ion-item-option style="background: rgb(156, 46, 46);">
+        <ion-item-option (click)="delete(table)" style="background: rgb(156, 46, 46);">
           Supprimer    
         </ion-item-option>
       </ion-item-options>

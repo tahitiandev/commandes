@@ -89,4 +89,12 @@ export class TablesPage implements OnInit {
     )
   }
 
+  delete(table : Tables){
+    this.firestore.delete(
+      CollectionName.Tables,
+      table.id,
+      table
+    )
+  }
+
 }
