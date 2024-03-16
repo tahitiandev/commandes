@@ -28,7 +28,10 @@ export class CommandeAReglerPage implements OnInit {
 
   voirCommentaire(commande : Commandes){
     if(commande.commentaire !== ''){
-      this.utility.popMessage(commande.commentaire);
+      this.utility.popMessage('Client : ' + commande.commentaire);
+    }
+    if(commande.commentairePreparateur !== ''){
+      this.utility.popMessage('Préparteur : ' + commande.commentairePreparateur);
     }
   }
 

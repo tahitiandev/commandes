@@ -30,6 +30,15 @@ export class ServirPage implements OnInit {
     });
   }
 
+  remettreEnPreparation(commande : Commandes){
+    commande.isPrepare = false;
+    this.firestore.put(
+      CollectionName.Commandes,
+      commande.id,
+      commande
+    )
+  }
+
   async getPlats(){
     (await this.firestore.getAll(CollectionName.Plats)).subscribe((plats : any) => {
       this.plats = plats.filter((plat:any) => plat.isActif)
@@ -38,10 +47,10 @@ export class ServirPage implements OnInit {
 
   voirCommentaire(commande : Commandes){
     if(commande.commentaire !== ''){
-      this.utility.popMessage(commande.commentaire);
+      this.utility.popMessage('Client : ' + commande.commentaire);
     }
     if(commande.commentairePreparateur !== ''){
-      this.utility.popMessage(commande.commentairePreparateur);
+      this.utility.popMessage('Préparteur : ' + commande.commentairePreparateur);
     }
   }
 
