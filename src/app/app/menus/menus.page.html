@@ -13,7 +13,7 @@
 <ion-content [fullscreen]="true">
 
   <div *ngFor="let famille of familles">
-    <h4 style="margin-left: 3%;">{{ famille.libelle }}</h4>
+    <h4 style="margin-left: 3%;"  *ngIf="!isModePost && !isModePut && !isModeImage">{{ famille.libelle }}</h4>
 
     <ion-list *ngIf="!isModePost && !isModePut && !isModeImage">
       <span *ngFor="let plat of plats">
