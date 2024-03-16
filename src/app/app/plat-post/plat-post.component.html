@@ -13,7 +13,7 @@
   </ion-item><br>
 
   <ion-item>
-    <ion-select formControlName="prix"  aria-label="Famille" interface="popover" placeholder="Famille" style="width: 10%;">
+    <ion-select formControlName="famille"  aria-label="Famille" interface="popover" placeholder="Famille" style="width: 10%;">
       <ion-select-option *ngFor="let famille of familles" value="{{ famille.libelle }}">{{ famille.libelle }}</ion-select-option>
     </ion-select>
     <ion-fab-button size="small">
@@ -27,7 +27,7 @@
 
   <div>
     <ion-button color="danger" (click)="annuler()">Annuler</ion-button>
-    <ion-button color="primary"  type="submit">Ajouter</ion-button>
+    <ion-button color="primary" type="submit">Ajouter</ion-button>
   </div>
 
 </form>

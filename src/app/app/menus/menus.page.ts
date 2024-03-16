@@ -78,6 +78,8 @@ export class MenusPage implements OnInit {
       createdBy : '0'
     }
 
+    console.log(plat)
+
     await this.firestore.post(
       CollectionName.Plats,
       plat,
