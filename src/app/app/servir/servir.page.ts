@@ -26,7 +26,6 @@ export class ServirPage implements OnInit {
   async getCommandes(){
     (await this.firestore.getAll(CollectionName.Commandes)).subscribe((commandes : any) => {
       this.commandes = commandes.filter((commande:any) => commande.isActif && commande.isPrepare && !commande.isLivre);
-      console.log(this.commandes)
     });
   }
 

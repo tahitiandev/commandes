@@ -17,6 +17,7 @@ export class CommandeAReglerPage implements OnInit {
   plats : Array<Plats> = [];
   tables : Array<Tables> = []
   tableSelection = undefined;
+  ARegler : any[] = [];
 
   constructor(private firestore : FirestoreService,
               private utility : UtilityService) { }
@@ -32,6 +33,17 @@ export class CommandeAReglerPage implements OnInit {
     }
     if(commande.commentairePreparateur !== ''){
       this.utility.popMessage('Préparteur : ' + commande.commentairePreparateur);
+    }
+  }
+
+  commandeARegler(event: any, commande: Commandes) {
+    if (event.detail.checked) {
+      this.ARegler.push(commande);
+    } else {
+      const index = this.ARegler.indexOf(commande);
+      if (index !== -1) {
+        this.ARegler.splice(index, 1);
+      }
     }
   }
 
@@ -89,6 +101,16 @@ export class CommandeAReglerPage implements OnInit {
       commande.id,
       commande
     );
+
+    this.utility.popMessage('Les commandes ont bien été réglées');
+  }
+
+  reglerMultiCommande(){
+    if(this.ARegler.length > 0){
+      for(let commande of this.ARegler){
+        this.regler(commande);
+      }
+    }
   }
 
   async getTables(commandes : Array<Commandes>) {
