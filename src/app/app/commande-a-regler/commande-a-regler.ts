@@ -4,6 +4,7 @@ import { Commandes } from 'src/app/models/Commandes';
 import { Plats } from 'src/app/models/Plats';
 import { Tables } from 'src/app/models/Tables';
 import { FirestoreService } from 'src/app/services/firestore.service';
+import { UtilityService } from 'src/app/services/utility.service';
 
 @Component({
   selector: 'app-commande-a-regler',
@@ -17,11 +18,18 @@ export class CommandeAReglerPage implements OnInit {
   tables : Array<Tables> = []
   tableSelection = undefined;
 
-  constructor(private firestore : FirestoreService) { }
+  constructor(private firestore : FirestoreService,
+              private utility : UtilityService) { }
 
   async ngOnInit() {
     await this.getCommandes();
     await this.getPlats();
+  }
+
+  voirCommentaire(commande : Commandes){
+    if(commande.commentaire !== ''){
+      this.utility.popMessage(commande.commentaire);
+    }
   }
 
   async getCommandes(){

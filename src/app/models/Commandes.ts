@@ -8,5 +8,6 @@ export interface Commandes{
     isLivre : boolean;
     isRegle : boolean;
     commentaire : string;
+    commentairePreparateur : string;
     createdOn : Date;
 }

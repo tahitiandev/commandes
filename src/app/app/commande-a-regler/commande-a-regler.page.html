@@ -23,8 +23,9 @@
 
   <ion-list lines="inset">
     <ion-item-sliding *ngFor="let commande of commandes">
-    <ion-item>
+    <ion-item  (click)="voirCommentaire(commande)">
       <ion-label>Table n°{{ commande.numeroTable }} - {{ commande.platid ? getLibellePlatById(commande.platid) : '' }} x {{ commande.quantite }} </ion-label>
+      <ion-icon name="newspaper-outline" *ngIf="commande.commentaire !== ''"></ion-icon>
     </ion-item>
     <ion-item-options side="end">
       <ion-item-option color="success" (click)="regler(commande)">Régler</ion-item-option>

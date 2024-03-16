@@ -55,6 +55,7 @@ export class PriseDeCommandeQuantiteComponent  implements OnInit {
         isLivre : false,
         isRegle : false,
         commentaire : value.commentaire,
+        commentairePreparateur : '',
         createdOn : new Date()
       }
         

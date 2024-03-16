@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AlertController } from '@ionic/angular';
 import { CollectionName } from 'src/app/enums/CollectionName';
 import { Commandes } from 'src/app/models/Commandes';
 import { Plats } from 'src/app/models/Plats';
@@ -16,6 +17,7 @@ export class PreparationsPage implements OnInit {
   plats : Array<Plats> = [];
 
   constructor(private firestore : FirestoreService,
+              private alertController : AlertController,
               private utility : UtilityService) { }
 
   async ngOnInit() {
@@ -50,6 +52,45 @@ export class PreparationsPage implements OnInit {
       commande.id,
       commande
     );
+  }
+
+  async commentairePreparateur(commande : Commandes){
+    const alert = await this.alertController.create({
+      cssClass: 'my-custom-class',
+      header: 'Ajouter une famille',
+      inputs: [
+        {
+          type : 'text',
+          name : 'commentaire',
+          placeholder : 'Commentaire'
+        }
+      ],
+      buttons: [
+        {
+          text: 'Annuler',
+          role: 'cancel',
+          cssClass: 'secondary',
+          handler: () => {
+
+          }
+        }
+        ,{
+          text: 'Valider',
+          handler: async (result : any) => {
+            if(result.commentaire !== ''){
+              commande.commentairePreparateur = result.commentaire;
+              this.firestore.put(
+                CollectionName.Commandes,
+                commande.id,
+                commande
+              );
+            }
+          }
+        }
+        
+      ]
+    });
+    await alert.present();
   }
 
   voirCommentaire(commande : Commandes){
