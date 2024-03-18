@@ -94,22 +94,25 @@ export class CommandeAReglerPage implements OnInit {
     );
   }
 
-  regler(commande : Commandes){
+  regler(commande : Commandes, ismultiple = false){
     commande.isRegle = true;
     this.firestore.put(
       CollectionName.Commandes,
       commande.id,
       commande
     );
-
-    this.utility.popMessage('Les commandes ont bien été réglées');
+    
+    if(!ismultiple){
+      this.utility.popMessage('Les commandes ont bien été réglées');
+    }
   }
 
   reglerMultiCommande(){
     if(this.ARegler.length > 0){
       for(let commande of this.ARegler){
-        this.regler(commande);
+        this.regler(commande, true);
       }
+      this.utility.popMessage('Les commandes ont bien été réglées');
     }
   }
 
