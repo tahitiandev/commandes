@@ -4,6 +4,6 @@ export interface Reglements{
     id : string;
     modeReglement : ModeReglement;
     montant : number;
-    rendu?:number;
+    isRendu?:boolean;
     groupeCommande : string;
 }

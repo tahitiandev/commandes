@@ -29,6 +29,7 @@ export class CommandeAReglerPage implements OnInit {
   totalReglement = 0;
   detailReglements : DetailReglement[] = [];
   groupeCommande = this.utility.generateKey();
+  montantRendu = 0;
 
   constructor(private firestore : FirestoreService,
               private alertController : AlertController,
@@ -79,8 +80,6 @@ export class CommandeAReglerPage implements OnInit {
       this.getTables(commandes)
     });
   }
-
-
 
   async getPlats(){
     (await this.firestore.getAll(CollectionName.Plats)).subscribe((plats : any) => {
@@ -151,9 +150,25 @@ export class CommandeAReglerPage implements OnInit {
         )
   
       }
+
+      if(this.totalReglement > this.totalFacture){
+        var reglement : Reglements = {
+          id : this.utility.generateKey(),
+          modeReglement : ModeReglement.Espece,
+          montant : this.totalReglement - this.totalFacture,
+          groupeCommande : this.groupeCommande,
+          isRendu : true
+        }
+        this.firestore.post(
+          CollectionName.Reglements,
+          reglement,
+          reglement.id
+        )
+      }
   
       this.detailReglements = [];
       this.ARegler = [];
+      this.montantRendu = 0;
       this.groupeCommande = this.utility.generateKey(); // new groupeCommande
       this.utility.popMessage('Les commandes ont bien été réglées');      
     }
@@ -235,6 +250,8 @@ export class CommandeAReglerPage implements OnInit {
               modeReglement : modeReglement,
               montant : response.montant
             })
+
+            this.montantRendu = Number(this.totalReglement - this.totalFacture);
 
             this.calculeTotalReglement()
           }
