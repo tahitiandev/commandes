@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { AlertController, AlertInput } from '@ionic/angular';
 import { CollectionName } from 'src/app/enums/CollectionName';
 import { Commandes } from 'src/app/models/Commandes';
 import { Plats } from 'src/app/models/Plats';
+import { Reglements } from 'src/app/models/Reglements';
 import { FirestoreService } from 'src/app/services/firestore.service';
 
 @Component({
@@ -12,13 +14,16 @@ import { FirestoreService } from 'src/app/services/firestore.service';
 export class CommandeClotureePage implements OnInit {
 
   commandes : Array<Commandes> = [];
+  reglements : Array<Reglements> = [];
   plats : Array<Plats> = [];
 
-  constructor(private firestore : FirestoreService) { }
+  constructor(private firestore : FirestoreService,
+              private alertController : AlertController) { }
 
   async ngOnInit() {
     await this.getCommandes();
     await this.getPlats();
+    await this.getReglements();
   }
 
   async getCommandes(){
@@ -27,10 +32,58 @@ export class CommandeClotureePage implements OnInit {
     });
   }
 
+  async getReglements(){
+    (await this.firestore.getAll(CollectionName.Reglements)).subscribe((reglements : any) => {
+      this.reglements = reglements;
+    });
+  }
+
   async getPlats(){
     (await this.firestore.getAll(CollectionName.Plats)).subscribe((plats : any) => {
       this.plats = plats.filter((plat:any) => plat.isActif)
     });
+  }
+
+  async getReglementByGroupeCommande(groupeCommande :any){
+    return await this.reglements.filter(reglement => reglement.groupeCommande === groupeCommande);
+  }
+
+  public async voirReglements(commande : Commandes){
+
+    var inputs : Array<AlertInput> = [];
+    var reglements = await this.getReglementByGroupeCommande(commande.groupeCommande);
+
+    for(let reglement of reglements){
+      inputs.push({
+        type : 'radio',
+        disabled : true,
+        label : reglement.modeReglement + ' - ' + reglement.montant + ' xpf'
+      })
+    }
+
+    const alert = await this.alertController.create({
+      cssClass: 'my-custom-class',
+      header: 'Ajouter une famille',
+      inputs: inputs,
+      buttons: [
+        {
+          text: 'Annuler',
+          role: 'cancel',
+          cssClass: 'secondary',
+          handler: () => {
+
+          }
+        }
+        ,{
+          text: 'Valider',
+          handler: async (result : any) => {
+
+          }
+        }
+        
+      ]
+    });
+    await alert.present();
   }
 
   getLibellePlatById(platid: any) {

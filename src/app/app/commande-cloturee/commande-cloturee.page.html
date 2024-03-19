@@ -13,7 +13,7 @@
 <ion-content [fullscreen]="true">
   <ion-list lines="inset">
     <ion-item-sliding *ngFor="let commande of commandes">
-    <ion-item>
+    <ion-item (click)="voirReglements(commande)">
       <ion-label>Table n°{{ commande.numeroTable }} - {{ commande.platid ? getLibellePlatById(commande.platid) : '' }} x {{ commande.quantite }} </ion-label>
     </ion-item>
     <ion-item-options side="end">
