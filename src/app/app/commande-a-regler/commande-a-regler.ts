@@ -1,11 +1,18 @@
 import { Component, OnInit } from '@angular/core';
+import { AlertController } from '@ionic/angular';
 import { CollectionName } from 'src/app/enums/CollectionName';
+import { ModeReglement } from 'src/app/enums/ModeReglements';
 import { Commandes } from 'src/app/models/Commandes';
 import { Plats } from 'src/app/models/Plats';
+import { Reglements } from 'src/app/models/Reglements';
 import { Tables } from 'src/app/models/Tables';
 import { FirestoreService } from 'src/app/services/firestore.service';
 import { UtilityService } from 'src/app/services/utility.service';
 
+interface DetailReglement{
+  modeReglement : ModeReglement,
+  montant : number
+}
 @Component({
   selector: 'app-commande-a-regler',
   templateUrl: './commande-a-regler.page.html',
@@ -18,8 +25,13 @@ export class CommandeAReglerPage implements OnInit {
   tables : Array<Tables> = []
   tableSelection = undefined;
   ARegler : any[] = [];
+  totalFacture = 0;
+  totalReglement = 0;
+  detailReglements : DetailReglement[] = [];
+  groupeCommande = this.utility.generateKey();
 
   constructor(private firestore : FirestoreService,
+              private alertController : AlertController,
               private utility : UtilityService) { }
 
   async ngOnInit() {
@@ -45,6 +57,7 @@ export class CommandeAReglerPage implements OnInit {
         this.ARegler.splice(index, 1);
       }
     }
+    this.calculeTotalAPayer();
   }
 
   async getCommandes(){
@@ -110,10 +123,136 @@ export class CommandeAReglerPage implements OnInit {
   reglerMultiCommande(){
     if(this.ARegler.length > 0){
       for(let commande of this.ARegler){
+        commande.groupeCommande = this.groupeCommande;
         this.regler(commande, true);
       }
-      this.utility.popMessage('Les commandes ont bien été réglées');
+
+      for(let detailReglement of this.detailReglements){
+
+        var reglement : Reglements = {
+          id : this.utility.generateKey(),
+          modeReglement : detailReglement.modeReglement,
+          montant : detailReglement.montant,
+          groupeCommande : this.groupeCommande
+        }
+  
+        this.firestore.post(
+          CollectionName.Reglements,
+          reglement,
+          reglement.id
+        )
+  
+      }
+  
+      this.detailReglements = [];
+      this.ARegler = [];
+      this.groupeCommande = this.utility.generateKey(); // new groupeCommande
+      this.utility.popMessage('Les commandes ont bien été réglées');      
     }
+  }
+
+  async chooseModeReglement(){
+    const alert = await this.alertController.create({
+      cssClass: 'my-custom-class',
+      header: 'Ajouter une famille',
+      inputs: [
+        {
+          type : 'radio',
+          label : 'Espèce',
+          value : ModeReglement.Espece
+        },
+        {
+          type : 'radio',
+          label : 'CB',
+          value : ModeReglement.CB
+        },
+        {
+          type : 'radio',
+          label : 'Carte local',
+          value : ModeReglement.CarteLocal
+        },
+        {
+          type : 'radio',
+          label : 'Virement',
+          value : ModeReglement.Virement
+        },
+      ],
+      buttons: [
+        {
+          text: 'Annuler',
+          role: 'cancel',
+          cssClass: 'secondary',
+          handler: () => {
+
+          }
+        }
+        ,{
+          text: 'Valider',
+          handler: async (modeReglement : ModeReglement) => {
+            this.setMontantAregler(modeReglement);
+          }
+        }
+        
+      ]
+    });
+    await alert.present();
+  }
+
+  async setMontantAregler(modeReglement : ModeReglement){
+
+    const alert = await this.alertController.create({
+      cssClass: 'my-custom-class',
+      header: 'Montant à régler',
+      inputs: [
+        {
+          type : 'number',
+          name : 'montant',
+          placeholder : 'Montant'
+        }
+      ],
+      buttons: [
+        {
+          text: 'Annuler',
+          role: 'cancel',
+          cssClass: 'secondary',
+          handler: () => {
+
+          }
+        }
+        ,{
+          text: 'Valider',
+          handler: async (response : any) => {
+
+            this.detailReglements.push({
+              modeReglement : modeReglement,
+              montant : response.montant
+            })
+
+            this.calculeTotalReglement()
+          }
+        }
+        
+      ]
+    });
+    await alert.present();
+
+  }
+
+  public calculeTotalAPayer(){
+    var totalFacture = 0;
+    for(let commande of this.ARegler){
+      var plat = this.plats.filter(plat => plat.id === commande.platid);
+      totalFacture += commande.quantite * plat[0].prix;
+    }
+    this.totalFacture = totalFacture;
+  }
+
+  public calculeTotalReglement(){
+    var totalReglement = 0;
+    for(let detailReglement of this.detailReglements){
+      totalReglement += Number(detailReglement.montant);
+    }
+    this.totalReglement = totalReglement;
   }
 
   async getTables(commandes : Array<Commandes>) {

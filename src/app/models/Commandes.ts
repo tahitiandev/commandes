@@ -1,3 +1,5 @@
+import { ModeReglement } from "../enums/ModeReglements";
+
 export interface Commandes{
     id:string;
     platid : string;
@@ -10,4 +12,5 @@ export interface Commandes{
     commentaire : string;
     commentairePreparateur : string;
     createdOn : Date;
+    groupeCommande? : string;
 }

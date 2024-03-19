@@ -39,8 +39,28 @@
   </ion-item-sliding>
   </ion-list>
 
-  <div class="button-add-table">
-    <ion-button [disabled]="ARegler.length === 0" (click)="reglerMultiCommande()" color="primary">Régler</ion-button>
+  
+  <ion-list *ngIf="this.ARegler.length > 0">
+    <h4>Total à payer : {{ totalFacture }} XPF</h4>
+    <h4>Total réglé : {{ totalReglement }} XPF</h4>
+    <h4>Reste à payer : {{ totalFacture -  totalReglement }} XPF</h4>
+    <br>
+    <span *ngIf="this.detailReglements.length > 0">
+      Détail des règlements effectués : 
+      <ion-item-sliding *ngFor="let detailReglement of detailReglements">
+        <ion-item>
+          <ion-label>- {{ detailReglement.modeReglement }} : {{ detailReglement.montant }} XPF</ion-label>
+        </ion-item>
+        <ion-item-options side="end">
+          <ion-item-option color="tertiary" style="background: red;">Retirer</ion-item-option>
+        </ion-item-options>
+      </ion-item-sliding>
+    </span>
+  </ion-list>
+  
+  <div class="button-container">
+    <ion-button [disabled]="totalFacture !== totalReglement || totalFacture === 0" (click)="reglerMultiCommande()" color="primary">Finaliser</ion-button>
+    <ion-button [disabled]="ARegler.length === 0 || totalFacture === totalReglement" (click)="chooseModeReglement()" color="primary">Régler</ion-button>
   </div>
 
 </ion-content>

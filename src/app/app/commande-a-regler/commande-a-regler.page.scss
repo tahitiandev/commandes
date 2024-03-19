@@ -1,11 +1,10 @@
-.button-add-table {
-    position: relative;
-    width: 100%;
-    height: 100%;
-  }
-  
-  ion-button {
-    position: fixed;
-    bottom: 30px;
-    right: 40px;
-  }
+.button-container {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  margin-top: 20px; /* Ajoutez une marge supérieure pour l'espace entre les boutons et le contenu précédent si nécessaire */
+}
+
+ion-button {
+  margin-left: 10px; /* Ajoutez une marge entre les boutons si nécessaire */
+}
