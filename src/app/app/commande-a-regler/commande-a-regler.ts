@@ -48,6 +48,14 @@ export class CommandeAReglerPage implements OnInit {
     }
   }
 
+  retirerReglement(detailReglement : DetailReglement){
+    const index = this.detailReglements.indexOf(detailReglement);
+      if (index !== -1) {
+        this.detailReglements.splice(index, 1);
+      }
+      this.calculeTotalAPayer();
+  }
+
   commandeARegler(event: any, commande: Commandes) {
     if (event.detail.checked) {
       this.ARegler.push(commande);
