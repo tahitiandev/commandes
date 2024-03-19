@@ -15,6 +15,7 @@ export class PreparationsPage implements OnInit {
 
   commandes : Array<Commandes> = [];
   plats : Array<Plats> = [];
+  ALivrer : Array<Commandes> = [];
 
   constructor(private firestore : FirestoreService,
               private alertController : AlertController,
@@ -43,6 +44,25 @@ export class PreparationsPage implements OnInit {
     var plats: Array<Plats> = this.plats;
     var plat: Plats | undefined = plats.find(plat => plat.id === platid);
     return plat?.libelle || ""; // Retourner le libellé du plat ou une chaîne vide si le plat n'est pas trouvé
+  }
+
+  CommandeALivrer(event: any, cmd: Commandes) {
+    if (event.detail.checked) {
+      this.ALivrer.push(cmd);
+    } else {
+      const index = this.ALivrer.indexOf(cmd);
+      if (index !== -1) {
+        this.ALivrer.splice(index, 1);
+      }
+    }
+  }
+
+  terminerMultiple(){
+    for(let commande of this.ALivrer){
+      this.terminer(commande);
+    }
+    this.ALivrer = [];
+    this.utility.popMessage('Les commandes sont bien passées à l\'étape de livraison')
   }
 
   terminer(commande : Commandes){

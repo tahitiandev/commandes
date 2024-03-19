@@ -14,6 +14,7 @@ export class ServirPage implements OnInit {
 
   commandes : Array<Commandes> = [];
   plats : Array<Plats> = [];
+  ARegler : Array<Commandes> = [];
 
   constructor(private firestore : FirestoreService,
               private utility : UtilityService) { }
@@ -28,6 +29,26 @@ export class ServirPage implements OnInit {
       this.commandes = commandes.filter((commande:any) => commande.isActif && commande.isPrepare && !commande.isLivre);
     });
   }
+
+  CommandeARegler(event: any, cmd: Commandes) {
+    if (event.detail.checked) {
+      this.ARegler.push(cmd);
+    } else {
+      const index = this.ARegler.indexOf(cmd);
+      if (index !== -1) {
+        this.ARegler.splice(index, 1);
+      }
+    }
+  }
+
+  terminerMultiple(){
+    for(let commande of this.ARegler){
+      this.terminer(commande);
+    }
+    this.ARegler = [];
+    this.utility.popMessage('Les commandes ont bien été livrées')
+  }
+
 
   remettreEnPreparation(commande : Commandes){
     commande.isPrepare = false;

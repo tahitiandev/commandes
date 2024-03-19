@@ -14,7 +14,7 @@
 
   <ion-list>
     <ion-item>
-      <ion-select aria-label="Table" interface="popover" placeholder="Tables" (ionChange)="tableSelected($event)">
+      <ion-select aria-label="Table" interface="popover" placeholder="Filtrer par numéro de table" (ionChange)="tableSelected($event)">
         <ion-select-option value="all">Toutes</ion-select-option>
         <ion-select-option *ngFor="let table of tables" value="{{table}}">{{ table }}</ion-select-option>
       </ion-select>

@@ -14,6 +14,7 @@
   <ion-list lines="inset">
     <ion-item-sliding *ngFor="let commande of commandes">
     <ion-item (click)="voirCommentaire(commande)">
+      <ion-checkbox style="margin-right: 10px;" (ionChange)="CommandeARegler($event,commande)"></ion-checkbox> 
       <ion-label>Table n°{{ commande.numeroTable }} - {{ commande.platid ? getLibellePlatById(commande.platid) : '' }} x {{ commande.quantite }} </ion-label>
       <ion-icon name="book-outline" *ngIf="commande.commentairePreparateur !== ''"></ion-icon>
       <ion-icon name="newspaper-outline" *ngIf="commande.commentaire !== ''"></ion-icon>
@@ -26,4 +27,8 @@
     </ion-item-options>
   </ion-item-sliding>
   </ion-list>
+
+  <div class="button-add-table">
+    <ion-button color="primary" [disabled]="ARegler.length === 0" (click)="terminerMultiple()">Bien livré</ion-button>
+  </div>
 </ion-content>
