@@ -61,10 +61,10 @@
   <div class="button-container">
     <!-- Conteneur pour les boutons Etape Préparation et Etape Livraison -->
     <div class="horizontal-buttons">
+      <ion-button [disabled]="ARegler.length === 0 || totalFacture === totalReglement" (click)="chooseModeReglement()" color="success">Régler</ion-button>
+      <ion-button [disabled]="totalFacture === 0 || totalFacture > totalReglement" (click)="reglerMultiCommande()" color="success">{{ totalReglement > totalFacture ? 'Terminer avec rendu de ' + (totalReglement - totalFacture) + ' xpf' : 'Terminer'}}</ion-button>
       <ion-button [disabled]="ARegler.length === 0" (click)="passerEtapePreparationMultiple()" color="primary">Etape Préparation</ion-button>
       <ion-button [disabled]="ARegler.length === 0" (click)="passerEtapeLivraisonMultiple()" color="primary">Etape Livraison</ion-button>
-      <ion-button [disabled]="totalFacture === 0 || totalFacture > totalReglement" (click)="reglerMultiCommande()" color="success">{{ totalReglement > totalFacture ? 'Terminer avec rendu de ' + (totalReglement - totalFacture) + ' xpf' : 'Terminer'}}</ion-button>
-      <ion-button [disabled]="ARegler.length === 0 || totalFacture === totalReglement" (click)="chooseModeReglement()" color="success">Régler</ion-button>
     </div>
   </div>
   

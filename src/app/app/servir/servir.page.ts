@@ -54,7 +54,7 @@ export class ServirPage implements OnInit {
       this.remettreEnPreparation(commande);
     }
     this.ARegler = [];
-    this.utility.popMessage('Les commandes ont bien été livrées')
+    this.utility.popMessage('Les commandes ont été remises à l\'étape Préparation')
   }
 
 

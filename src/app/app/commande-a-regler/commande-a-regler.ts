@@ -99,6 +99,7 @@ export class CommandeAReglerPage implements OnInit {
     for(let commande of this.ARegler){
       this.passerEtapePreparation(commande);
     }
+    this.utility.popMessage('Les commandes ont été remises à l\'étape Préparation');
     this.ARegler = [];
   }
 
@@ -116,6 +117,7 @@ export class CommandeAReglerPage implements OnInit {
     for(let commande of this.ARegler){
       this.passerEtapeLivraison(commande);
     }
+    this.utility.popMessage('Les commandes ont été remises à l\'étape Livraison');
     this.ARegler = [];
   }
 
