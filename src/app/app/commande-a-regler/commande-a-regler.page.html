@@ -39,12 +39,11 @@
   </ion-item-sliding>
   </ion-list>
 
-  
   <ion-list class="detail-paiement">
-  <!-- <ion-list *ngIf="this.ARegler.length > 0"> -->
     <h4>Total à payer : {{ totalFacture }} XPF</h4>
-    <h4>Total réglé : {{ totalReglement }} XPF</h4>
-    <h4>Reste à payer : {{ totalFacture -  totalReglement }} XPF</h4>
+    <h4>Total à régler : {{ totalReglement }} XPF</h4>
+    <h4>Reste à payer : {{ totalFacture <  totalReglement ? 0 :  totalFacture -  totalReglement }} XPF</h4>
+    <h4>Rendu : {{ totalReglement - totalFacture < 0 ? 0 : totalReglement - totalFacture }} XPF</h4>
     <br>
     <span style="color: rgb(255, 200, 230);" *ngIf="this.detailReglements.length > 0">
       Détail des règlements effectués : 
@@ -60,8 +59,15 @@
   </ion-list>
   
   <div class="button-container">
-    <ion-button [disabled]="totalFacture === 0 || totalFacture > totalReglement" (click)="reglerMultiCommande()" color="primary">{{ totalReglement > totalFacture ? 'Terminer avec rendu de ' + (totalReglement - totalFacture) + ' xpf' : 'Terminer'}}</ion-button>
-    <ion-button [disabled]="ARegler.length === 0 || totalFacture === totalReglement" (click)="chooseModeReglement()" color="primary">Régler</ion-button>
+    <!-- Conteneur pour les boutons Etape Préparation et Etape Livraison -->
+    <div class="horizontal-buttons">
+      <ion-button [disabled]="ARegler.length === 0" (click)="passerEtapePreparationMultiple()" color="primary">Etape Préparation</ion-button>
+      <ion-button [disabled]="ARegler.length === 0" (click)="passerEtapeLivraisonMultiple()" color="primary">Etape Livraison</ion-button>
+      <ion-button [disabled]="totalFacture === 0 || totalFacture > totalReglement" (click)="reglerMultiCommande()" color="success">{{ totalReglement > totalFacture ? 'Terminer avec rendu de ' + (totalReglement - totalFacture) + ' xpf' : 'Terminer'}}</ion-button>
+      <ion-button [disabled]="ARegler.length === 0 || totalFacture === totalReglement" (click)="chooseModeReglement()" color="success">Régler</ion-button>
+    </div>
   </div>
+  
+  
 
 </ion-content>

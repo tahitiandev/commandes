@@ -95,6 +95,13 @@ export class CommandeAReglerPage implements OnInit {
     return plat?.libelle || ""; // Retourner le libellé du plat ou une chaîne vide si le plat n'est pas trouvé
   }
 
+  passerEtapePreparationMultiple(){
+    for(let commande of this.ARegler){
+      this.passerEtapePreparation(commande);
+    }
+    this.ARegler = [];
+  }
+
   passerEtapePreparation(commande : Commandes){
     commande.isPrepare = false;
     commande.isLivre = false;
@@ -103,6 +110,13 @@ export class CommandeAReglerPage implements OnInit {
       commande.id,
       commande
     );
+  }
+
+  passerEtapeLivraisonMultiple(){
+    for(let commande of this.ARegler){
+      this.passerEtapeLivraison(commande);
+    }
+    this.ARegler = [];
   }
 
   passerEtapeLivraison(commande : Commandes){
