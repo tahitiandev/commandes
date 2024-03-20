@@ -55,6 +55,7 @@ export class CommandeAReglerPage implements OnInit {
         this.detailReglements.splice(index, 1);
       }
       this.calculeTotalAPayer();
+      this.calculeTotalReglement();
   }
 
   commandeARegler(event: any, commande: Commandes) {

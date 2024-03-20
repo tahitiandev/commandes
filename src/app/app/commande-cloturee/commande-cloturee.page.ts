@@ -16,6 +16,8 @@ export class CommandeClotureePage implements OnInit {
   commandes : Array<Commandes> = [];
   reglements : Array<Reglements> = [];
   plats : Array<Plats> = [];
+  commandesRegroupees: {[groupeCommande: string]: Commandes[]} = {};
+
 
   constructor(private firestore : FirestoreService,
               private alertController : AlertController) { }
@@ -26,9 +28,19 @@ export class CommandeClotureePage implements OnInit {
     await this.getReglements();
   }
 
-  async getCommandes(){
-    (await this.firestore.getAll(CollectionName.Commandes)).subscribe((commandes : any) => {
-      this.commandes = commandes.filter((commande:any) => commande.isRegle);
+  async getCommandes() {
+    (await this.firestore.getAll(CollectionName.Commandes)).subscribe((commandes: any) => {
+      this.commandes = commandes.filter((commande: any) => commande.isRegle);
+      // Regrouper les commandes par groupeCommande
+      this.commandes.forEach(commande => {
+        // Vérifier si la commande a une propriété groupeCommande
+        if (commande.groupeCommande) {
+          if (!this.commandesRegroupees[commande.groupeCommande]) {
+            this.commandesRegroupees[commande.groupeCommande] = [];
+          }
+          this.commandesRegroupees[commande.groupeCommande].push(commande);
+        }
+      });
     });
   }
 
@@ -44,6 +56,10 @@ export class CommandeClotureePage implements OnInit {
     });
   }
 
+  getPrixByPlatId(platid : any){
+    return this.plats.find(plat => plat.id === platid)?.prix;
+  }
+
   async getReglementByGroupeCommande(groupeCommande :any){
     return await this.reglements.filter(reglement => reglement.groupeCommande === groupeCommande);
   }
@@ -57,7 +73,7 @@ export class CommandeClotureePage implements OnInit {
       inputs.push({
         type : 'radio',
         disabled : true,
-        label : reglement.modeReglement + ' - ' + reglement.montant + ' xpf'
+        label : reglement.isRendu ? 'Rendu monnaie : -' + reglement.montant + ' xpf': reglement.modeReglement + ' - ' + reglement.montant + ' xpf'
       })
     }
 
