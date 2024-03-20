@@ -20,7 +20,7 @@ const routes: Routes = [
     loadChildren: () => import('./app/prise-de-commande/prise-de-commande.module').then( m => m.PriseDeCommandePageModule)
   },
   {
-    path: 'prise-de-commande/:token/:id',
+    path: 'prise-de-commande/:token/:id/:clientComptant',
     loadChildren: () => import('./app/prise-de-commande/prise-de-commande.module').then( m => m.PriseDeCommandePageModule)
   },
   {

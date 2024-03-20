@@ -12,6 +12,11 @@
 
 <ion-content [fullscreen]="true">
   <ion-list>
+    <ion-item>
+      <ion-label (click)="nomClientComptant()" style="cursor: pointer;">
+        <h2>==> Client COMPTANT <==</h2>
+      </ion-label>
+    </ion-item>
     <ion-item *ngFor="let table of tables">
       <ion-label (click)="navitageToPriseDeCommande(table.numero)" style="cursor: pointer;">
         <h2>Table n°{{ table.numero }}</h2>

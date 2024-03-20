@@ -16,6 +16,7 @@ export class PriseDeCommandeQuantiteComponent  implements OnInit {
 
   @Input() platInput : any;
   @Input() tableIdInput : any;
+  @Input() nomClientComptant : any;
   @Output() fermerOuput = new EventEmitter<any>();
 
   constructor(private firestore : FirestoreService,
@@ -56,7 +57,8 @@ export class PriseDeCommandeQuantiteComponent  implements OnInit {
         isRegle : false,
         commentaire : value.commentaire,
         commentairePreparateur : '',
-        createdOn : new Date()
+        createdOn : new Date(),
+        nomClientComptant : this.nomClientComptant
       }
         
       await this.firestore.post(

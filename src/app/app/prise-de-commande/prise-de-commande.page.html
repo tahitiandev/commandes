@@ -17,7 +17,7 @@
 
 <ion-content [fullscreen]="true">
 
-  <h3 *ngIf="!isModeImage && !isSetQuantite && !isPanier" style="text-align: center;">Table n° {{ tablenumero }}</h3>
+  <h3 *ngIf="!isModeImage && !isSetQuantite && !isPanier" style="text-align: center;">{{ tablenumero === 'comptant' ? nomClientComptant : 'Table n°' + tablenumero }}</h3>
   
   <span *ngIf="!isModeImage && !isSetQuantite && !isPanier">
   <div *ngFor="let famille of familles">
@@ -46,6 +46,7 @@
   <app-prise-de-commande-quantite *ngIf="isSetQuantite"
                                   [platInput]="plat"
                                   [tableIdInput]="tablenumero"
+                                  [nomClientComptant]="nomClientComptant"
                                   (fermerOuput)="setIsSetQuantite()"></app-prise-de-commande-quantite>
 
    <app-panier *ngIf=" isPanier"

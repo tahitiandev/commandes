@@ -13,4 +13,5 @@ export interface Commandes{
     commentairePreparateur : string;
     createdOn : Date;
     groupeCommande? : string;
+    nomClientComptant?:string;
 }

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { NavController } from '@ionic/angular';
+import { AlertController, NavController } from '@ionic/angular';
 import { CollectionName } from 'src/app/enums/CollectionName';
 import { FirestoreService } from 'src/app/services/firestore.service';
 
@@ -14,6 +14,7 @@ export class PriseDeCommandeComptoirPage implements OnInit {
   settings : any;
 
   constructor(private firestore : FirestoreService,
+              private alertController : AlertController,
               private navigate : NavController) { 
 
   }
@@ -35,8 +36,44 @@ export class PriseDeCommandeComptoirPage implements OnInit {
     });
   }
 
-  navitageToPriseDeCommande(numeroTable : any){
-    this.navigate.navigateRoot("prise-de-commande/" + this.settings.token + "/" + numeroTable);
+  navitageToPriseDeCommande(numeroTable : any, nomClientComptant? : any){
+    if(nomClientComptant === undefined){
+      this.navigate.navigateRoot("prise-de-commande/" + this.settings.token + "/" + numeroTable + "/" + '');
+    }else{
+      this.navigate.navigateRoot("prise-de-commande/" + this.settings.token + "/" + numeroTable + "/" + nomClientComptant);
+    }
+  }
+
+  public async nomClientComptant(){
+    const alert = await this.alertController.create({
+      cssClass: 'my-custom-class',
+      header: 'Ajouter une famille',
+      inputs: [
+        {
+          type : 'text',
+          name : 'nom',
+          placeholder : 'Nom du client'
+        }
+      ],
+      buttons: [
+        {
+          text: 'Annuler',
+          role: 'cancel',
+          cssClass: 'secondary',
+          handler: () => {
+
+          }
+        }
+        ,{
+          text: 'Valider',
+          handler: async (result : any) => {
+            this.navitageToPriseDeCommande('comptant',result.nom)
+          }
+        }
+        
+      ]
+    });
+    await alert.present();
   }
 
 

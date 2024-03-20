@@ -22,8 +22,9 @@ export class PriseDeCommandePage implements OnInit {
   isModeImage = false;
   isPanier = false;
   plat : any;
-  tablenumero = 0;
+  tablenumero : any = '';
   token = "";
+  nomClientComptant = '';
   compteurPanier = 0;
   settings : any;
   familles : Array<Familles> = [];
@@ -36,6 +37,7 @@ export class PriseDeCommandePage implements OnInit {
   ngOnInit() {
     this.tablenumero = this.route.snapshot.params['id'];
     this.token = this.route.snapshot.params['token'];
+    this.nomClientComptant = this.route.snapshot.params['clientComptant'];
     this.getSettings();
     this.getPlats();
     this.getCommandes();
