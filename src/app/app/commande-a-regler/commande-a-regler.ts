@@ -30,6 +30,7 @@ export class CommandeAReglerPage implements OnInit {
   detailReglements : DetailReglement[] = [];
   groupeCommande = this.utility.generateKey();
   montantRendu = 0;
+  isToutSelectionner = true;
 
   constructor(private firestore : FirestoreService,
               private alertController : AlertController,
@@ -68,6 +69,31 @@ export class CommandeAReglerPage implements OnInit {
       }
     }
     this.calculeTotalAPayer();
+  }
+
+  toutSelectionnerDeselectionner(toutSelectionner : boolean) {
+    if(toutSelectionner){
+
+      if(this.tableSelection === undefined){
+        this.ARegler = [...this.commandes];
+      }else{
+        this.ARegler = [];
+        for(let commande of this.commandes){
+          if(commande.numeroTable === this.tableSelection){
+            this.ARegler.push(commande);
+          }
+        }
+      }
+      this.isToutSelectionner = !this.isToutSelectionner;
+    }//if toutSelectionner
+    else{
+      this.ARegler = []
+      this.isToutSelectionner = !this.isToutSelectionner;
+    }
+  }
+
+  commandeSelectionnee(commande: Commandes): boolean {
+    return this.ARegler.includes(commande);
   }
 
   async getCommandes(){

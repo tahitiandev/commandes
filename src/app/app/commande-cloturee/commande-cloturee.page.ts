@@ -17,6 +17,7 @@ export class CommandeClotureePage implements OnInit {
   reglements : Array<Reglements> = [];
   plats : Array<Plats> = [];
   commandesRegroupees: {[groupeCommande: string]: Commandes[]} = {};
+  groupeCommandes : Array<any> = [];
 
 
   constructor(private firestore : FirestoreService,
@@ -28,21 +29,38 @@ export class CommandeClotureePage implements OnInit {
     await this.getReglements();
   }
 
-  async getCommandes() {
-    (await this.firestore.getAll(CollectionName.Commandes)).subscribe((commandes: any) => {
-      this.commandes = commandes.filter((commande: any) => commande.isRegle);
-      // Regrouper les commandes par groupeCommande
-      this.commandes.forEach(commande => {
-        // Vérifier si la commande a une propriété groupeCommande
-        if (commande.groupeCommande) {
-          if (!this.commandesRegroupees[commande.groupeCommande]) {
-            this.commandesRegroupees[commande.groupeCommande] = [];
-          }
-          this.commandesRegroupees[commande.groupeCommande].push(commande);
-        }
-      });
+  async getCommandes(){
+    (await this.firestore.getAll(CollectionName.Commandes)).subscribe((commandes : any) => {
+      // Filtrer les commandes réglées et les stocker dans this.commandes
+      this.commandes = commandes.filter((commande:any) => commande.isRegle);
+      // Appeler la fonction avec les commandes réglées seulement
+      this.obtenirGroupesCommandeSansDoublon(this.commandes);
     });
+}
+
+obtenirGroupesCommandeSansDoublon(commandes: Commandes[]) {
+  // Création d'un ensemble pour stocker les groupes de commande uniques
+  const groupesSet = new Set<string>();
+
+  // Filtrage des doublons et ajout des groupes uniques à l'ensemble
+  for(let commande of commandes){
+    if (commande.groupeCommande) {
+        groupesSet.add(commande.groupeCommande);
+    }
   }
+
+  // Conversion de l'ensemble en tableau et tri par ordre décroissant de createdOn
+  const groupeCommande = Array.from(groupesSet).sort((a, b) => {
+      // Obtention de la date la plus récente pour chaque groupe de commande
+      const dateA = new Date((commandes.find(cmd => cmd.groupeCommande === a)?.createdOn ?? 0) as any);
+      const dateB = new Date((commandes.find(cmd => cmd.groupeCommande === b)?.createdOn ?? 0) as any);
+
+      // Comparaison des dates dans l'ordre décroissant
+      return dateB.getTime() - dateA.getTime();
+  });
+
+  this.groupeCommandes = groupeCommande;
+}
 
   async getReglements(){
     (await this.firestore.getAll(CollectionName.Reglements)).subscribe((reglements : any) => {
@@ -56,8 +74,18 @@ export class CommandeClotureePage implements OnInit {
     });
   }
 
-  getPrixByPlatId(platid : any){
-    return this.plats.find(plat => plat.id === platid)?.prix;
+  getPrixByPlatId(platid: any) {
+    const plat = this.plats.find(plat => plat.id === platid);
+    return plat ? plat.prix : 0; // ou une valeur par défaut si nécessaire
+}
+
+  getTotalByGroupeCommande(groupeCommande : any){
+    var total = 0;
+    var commandes = this.commandes.filter(commade => commade.groupeCommande === groupeCommande);
+    for(let commande of commandes){
+      total += Number(this.getPrixByPlatId(commande.platid));
+    }
+    return total;
   }
 
   async getReglementByGroupeCommande(groupeCommande :any){

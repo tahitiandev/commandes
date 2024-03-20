@@ -15,6 +15,7 @@ export class ServirPage implements OnInit {
   commandes : Array<Commandes> = [];
   plats : Array<Plats> = [];
   ARegler : Array<Commandes> = [];
+  isToutSelectionner = true;
 
   constructor(private firestore : FirestoreService,
               private utility : UtilityService) { }
@@ -65,6 +66,20 @@ export class ServirPage implements OnInit {
       commande.id,
       commande
     )
+  }
+
+  toutSelectionnerDeselectionner(toutSelectionner : boolean) {
+    if(toutSelectionner){
+      this.ARegler = [...this.commandes];
+      this.isToutSelectionner = !this.isToutSelectionner;
+    }else{
+      this.ARegler = [];
+      this.isToutSelectionner = !this.isToutSelectionner;
+    }
+  }
+
+  commandeSelectionnee(commande: Commandes): boolean {
+    return this.ARegler.includes(commande);
   }
 
   async getPlats(){

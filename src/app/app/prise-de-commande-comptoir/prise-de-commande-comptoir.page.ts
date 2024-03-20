@@ -47,7 +47,7 @@ export class PriseDeCommandeComptoirPage implements OnInit {
   public async nomClientComptant(){
     const alert = await this.alertController.create({
       cssClass: 'my-custom-class',
-      header: 'Ajouter une famille',
+      header: 'Renseigner le nom du client',
       inputs: [
         {
           type : 'text',
@@ -67,7 +67,10 @@ export class PriseDeCommandeComptoirPage implements OnInit {
         ,{
           text: 'Valider',
           handler: async (result : any) => {
-            this.navitageToPriseDeCommande('comptant',result.nom)
+            
+            var nom = result.nom === '' ?  'Client comptant' : result.nom;
+
+            this.navitageToPriseDeCommande('comptant', nom);
           }
         }
         

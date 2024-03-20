@@ -16,6 +16,7 @@ export class PreparationsPage implements OnInit {
   commandes : Array<Commandes> = [];
   plats : Array<Plats> = [];
   ALivrer : Array<Commandes> = [];
+  isToutSelectionner = true;
 
   constructor(private firestore : FirestoreService,
               private alertController : AlertController,
@@ -36,6 +37,20 @@ export class PreparationsPage implements OnInit {
     (await this.firestore.getAll(CollectionName.Plats)).subscribe((plats : any) => {
       this.plats = plats.filter((plat:any) => plat.isActif)
     });
+  }
+
+  toutSelectionnerDeselectionner(toutSelectionner : boolean) {
+    if(toutSelectionner){
+      this.ALivrer = [...this.commandes];
+      this.isToutSelectionner = !this.isToutSelectionner;
+    }else{
+      this.ALivrer = [];
+      this.isToutSelectionner = !this.isToutSelectionner;
+    }
+  }
+
+  commandeSelectionnee(commande: Commandes): boolean {
+    return this.ALivrer.includes(commande);
   }
 
   getLibellePlatById(platid: any) {

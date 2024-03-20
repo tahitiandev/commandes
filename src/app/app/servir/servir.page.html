@@ -14,7 +14,7 @@
   <ion-list lines="inset">
     <ion-item-sliding *ngFor="let commande of commandes">
     <ion-item (click)="voirCommentaire(commande)">
-      <ion-checkbox style="margin-right: 10px;" (ionChange)="CommandeARegler($event,commande)"></ion-checkbox> 
+      <ion-checkbox style="margin-right: 10px;" [checked]="commandeSelectionnee(commande)" (ionChange)="CommandeARegler($event,commande)"></ion-checkbox> 
       <ion-label>{{ commande.numeroTable === 'comptant' ? commande.nomClientComptant : 'Table n°' + commande.numeroTable }} - {{ commande.platid ? getLibellePlatById(commande.platid) : '' }} x {{ commande.quantite }} </ion-label>
       <ion-icon name="book-outline" *ngIf="commande.commentairePreparateur !== ''"></ion-icon>
       <ion-icon name="newspaper-outline" *ngIf="commande.commentaire !== ''"></ion-icon>
@@ -29,8 +29,12 @@
   </ion-list>
 
   <div class="button-container">
-    <ion-button color="primary" [disabled]="ARegler.length === 0" (click)="remettreEnPreparationMultiple()">Etape Préparation</ion-button>
-    <ion-button color="success" [disabled]="ARegler.length === 0" (click)="terminerMultiple()">Etape Régler</ion-button>
+    <ion-button color="dark" [disabled]="commandes.length === 0" (click)="toutSelectionnerDeselectionner(isToutSelectionner)">{{ isToutSelectionner ? 'Tout sélectionner' : 'Tout déselctionner' }}</ion-button>
+    <div class="secondary-buttons">
+      <ion-button color="success" [disabled]="ARegler.length === 0" (click)="remettreEnPreparationMultiple()"><< Préparation</ion-button>
+      <ion-button color="success" [disabled]="ARegler.length === 0" (click)="terminerMultiple()">Régler >></ion-button>
+    </div>
   </div>
+  
   
 </ion-content>

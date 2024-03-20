@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { NavController } from '@ionic/angular';
 import { CollectionName } from 'src/app/enums/CollectionName';
 import { Commandes } from 'src/app/models/Commandes';
 import { FirestoreService } from 'src/app/services/firestore.service';
@@ -21,6 +22,7 @@ export class PriseDeCommandeQuantiteComponent  implements OnInit {
 
   constructor(private firestore : FirestoreService,
               private utility : UtilityService,
+              private nav : NavController,
               private formbuilder: FormBuilder) { }
 
   ngOnInit() {

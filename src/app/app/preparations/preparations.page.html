@@ -14,7 +14,7 @@
   <ion-list lines="inset">
     <ion-item-sliding *ngFor="let commande of commandes">
       <ion-item (click)="voirCommentaire(commande)">
-        <ion-checkbox style="margin-right: 10px;" (ionChange)="CommandeALivrer($event,commande)"></ion-checkbox> 
+        <ion-checkbox style="margin-right: 10px;" [checked]="commandeSelectionnee(commande)" (ionChange)="CommandeALivrer($event,commande)"></ion-checkbox> 
       <ion-label>{{ commande.numeroTable === 'comptant' ? commande.nomClientComptant : 'Table n°' + commande.numeroTable }} - {{ commande.platid ? getLibellePlatById(commande.platid) : '' }} x {{ commande.quantite }} </ion-label>
       <ion-icon name="newspaper-outline" *ngIf="commande.commentaire !== ''"></ion-icon>
       <ion-icon name="book-outline" *ngIf="commande.commentairePreparateur !== ''"></ion-icon>
@@ -28,7 +28,8 @@
   </ion-item-sliding>
   </ion-list>
 
-  <div class="button-add-table">
-    <ion-button color="success" [disabled]="ALivrer.length === 0" (click)="terminerMultiple()">Etape Livraison</ion-button>
+  <div class="button-container">
+    <ion-button color="dark" [disabled]="commandes.length === 0" (click)="toutSelectionnerDeselectionner(isToutSelectionner)">{{ isToutSelectionner ? 'Tout sélectionner' : 'Tout déselctionner' }}</ion-button>
+    <ion-button color="success" [disabled]="ALivrer.length === 0" (click)="terminerMultiple()">Livraison >></ion-button>
   </div>
 </ion-content>

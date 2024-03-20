@@ -21,10 +21,10 @@
     </ion-item>
   </ion-list>
 
-  <ion-list lines="inset" style="overflow: scroll; height: 55%;">
+  <ion-list lines="inset" class="affichage-liste">
     <ion-item-sliding *ngFor="let commande of commandes">
     <ion-item >
-      <ion-checkbox style="margin-right: 10px;" (ionChange)="commandeARegler($event,commande)"></ion-checkbox> 
+      <ion-checkbox style="margin-right: 10px;" [checked]="commandeSelectionnee(commande)" (ionChange)="commandeARegler($event,commande)"></ion-checkbox> 
       <ion-label> {{ commande.numeroTable === 'comptant' ? commande.nomClientComptant : 'Table n°' + commande.numeroTable }} - {{ commande.platid ? getLibellePlatById(commande.platid) : '' }} x {{ commande.quantite }} </ion-label>
       <ion-icon (click)="voirCommentaire(commande)" name="newspaper-outline" *ngIf="commande.commentaire !== ''"></ion-icon>
       <ion-icon (click)="voirCommentaire(commande)" name="book-outline" *ngIf="commande.commentairePreparateur !== ''"></ion-icon>
@@ -61,6 +61,7 @@
   <div class="button-container">
     <!-- Conteneur pour les boutons Etape Préparation et Etape Livraison -->
     <div class="horizontal-buttons">
+      <ion-button color="dark" [disabled]="commandes.length === 0" (click)="toutSelectionnerDeselectionner(isToutSelectionner)">{{ isToutSelectionner ? 'Tout sélectionner' : 'Tout déselctionner' }}</ion-button>
       <ion-button [disabled]="ARegler.length === 0 || totalFacture === totalReglement" (click)="chooseModeReglement()" color="success">Régler</ion-button>
       <ion-button [disabled]="totalFacture === 0 || totalFacture > totalReglement" (click)="reglerMultiCommande()" color="success">{{ totalReglement > totalFacture ? 'Terminer avec rendu de ' + (totalReglement - totalFacture) + ' xpf' : 'Terminer'}}</ion-button>
       <ion-button [disabled]="ARegler.length === 0" (click)="passerEtapePreparationMultiple()" color="primary">Etape Préparation</ion-button>

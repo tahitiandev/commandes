@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { AlertController } from '@ionic/angular';
+import { AlertController, NavController } from '@ionic/angular';
 import { CollectionName } from 'src/app/enums/CollectionName';
 import { Commandes } from 'src/app/models/Commandes';
 import { Plats } from 'src/app/models/Plats';
@@ -20,6 +20,7 @@ export class PanierComponent  implements OnInit {
 
   constructor(private firestore : FirestoreService,
               private alertController : AlertController,
+              private nav : NavController,
               private utility : UtilityService) { }
 
   async ngOnInit() {
@@ -124,8 +125,9 @@ export class PanierComponent  implements OnInit {
           )
         });
         this.utility.popMessage('Votre commande a bien été envoyée');
-        this.fermer();
+        this.nav.navigateRoot('comptoir')
       }else{
+        this.utility.popMessage('Votre panier ne contient aucune commande');
         this.fermer();
       }
   }
