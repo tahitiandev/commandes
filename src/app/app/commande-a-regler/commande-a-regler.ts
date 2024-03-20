@@ -75,7 +75,7 @@ export class CommandeAReglerPage implements OnInit {
     if(toutSelectionner){
 
       if(this.tableSelection === undefined){
-        this.ARegler = [...this.commandes];
+        this.ARegler = this.commandes;
       }else{
         this.ARegler = [];
         for(let commande of this.commandes){
@@ -90,6 +90,8 @@ export class CommandeAReglerPage implements OnInit {
       this.ARegler = []
       this.isToutSelectionner = !this.isToutSelectionner;
     }
+    this.calculeTotalAPayer();
+    this.calculeTotalReglement();
   }
 
   commandeSelectionnee(commande: Commandes): boolean {
