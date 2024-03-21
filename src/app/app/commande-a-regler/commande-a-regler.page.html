@@ -26,6 +26,7 @@
     <ion-item >
       <ion-checkbox style="margin-right: 10px;" [checked]="commandeSelectionnee(commande)" (ionChange)="commandeARegler($event,commande)"></ion-checkbox> 
       <ion-label> {{ commande.numeroTable === 'comptant' ? commande.nomClientComptant : 'Table n°' + commande.numeroTable }} - {{ commande.platid ? getLibellePlatById(commande.platid) : '' }} x {{ commande.quantite }} </ion-label>
+      {{ getPrixByPlatId(commande.platid) }} xpf
       <ion-icon (click)="voirCommentaire(commande)" name="newspaper-outline" *ngIf="commande.commentaire !== ''"></ion-icon>
       <ion-icon (click)="voirCommentaire(commande)" name="book-outline" *ngIf="commande.commentairePreparateur !== ''"></ion-icon>
     </ion-item>

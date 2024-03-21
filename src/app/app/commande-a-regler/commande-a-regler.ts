@@ -71,6 +71,11 @@ export class CommandeAReglerPage implements OnInit {
     this.calculeTotalAPayer();
   }
 
+  getPrixByPlatId(platid: any) {
+    const plat = this.plats.find(plat => plat.id === platid);
+    return plat ? plat.prix : 0; // ou une valeur par défaut si nécessaire
+  }
+
   toutSelectionnerDeselectionner(toutSelectionner : boolean) {
     if(toutSelectionner){
 
@@ -79,8 +84,15 @@ export class CommandeAReglerPage implements OnInit {
       }else{
         this.ARegler = [];
         for(let commande of this.commandes){
-          if(commande.numeroTable === this.tableSelection){
-            this.ARegler.push(commande);
+          if(!isNaN(Number(this.tableSelection))){
+            if(commande.numeroTable === this.tableSelection){
+              this.ARegler.push(commande);
+            }
+          }
+          else{
+            if(commande.nomClientComptant == this.tableSelection){
+              this.ARegler.push(commande);
+            }
           }
         }
       }
@@ -104,9 +116,13 @@ export class CommandeAReglerPage implements OnInit {
       if(this.tableSelection === undefined || this.tableSelection === "all"){
         this.commandes = commandes.filter((commande:any) => commande.isActif && commande.isPrepare && commande.isLivre && !commande.isRegle);
       }else{
-        this.commandes = commandes.filter((commande:any) => commande.isActif && commande.isPrepare && commande.isLivre && !commande.isRegle && commande.numeroTable === this.tableSelection);
+        if (!isNaN(Number(this.tableSelection))) {
+          this.commandes = commandes.filter((commande:any) => commande.isActif && commande.isPrepare && commande.isLivre && !commande.isRegle && commande.numeroTable === this.tableSelection);
+        }else{
+          this.commandes = commandes.filter((commande:any) => commande.isActif && commande.isPrepare && commande.isLivre && !commande.isRegle && commande.nomClientComptant == this.tableSelection);
+        }
       }
-      this.getTables(commandes)
+      this.getTables(this.commandes);
     });
   }
 
@@ -327,9 +343,15 @@ export class CommandeAReglerPage implements OnInit {
 
   async getTables(commandes : Array<Commandes>) {
     const tableNumbersSet = new Set<any>(); 
-    commandes.forEach(commande => {
-      tableNumbersSet.add(commande.numeroTable);
-    });
+
+    for(let commande of commandes){
+      if(commande.numeroTable !== 'comptant'){
+        tableNumbersSet.add(Number(commande.numeroTable));
+      }else{
+        tableNumbersSet.add(commande.nomClientComptant);
+      }
+    }
+
     this.tables =  Array.from(tableNumbersSet);
   }
 
