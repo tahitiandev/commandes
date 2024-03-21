@@ -60,7 +60,9 @@ export class PriseDeCommandeQuantiteComponent  implements OnInit {
         commentaire : value.commentaire,
         commentairePreparateur : '',
         createdOn : new Date(),
-        nomClientComptant : this.nomClientComptant
+        nomClientComptant : this.nomClientComptant,
+        isDeleted : false,
+        groupeCommande : '',
       }
         
       await this.firestore.post(

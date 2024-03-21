@@ -114,16 +114,25 @@ export class CommandeAReglerPage implements OnInit {
     (await this.firestore.getAll(CollectionName.Commandes)).subscribe((commandes : any) => {
 
       if(this.tableSelection === undefined || this.tableSelection === "all"){
-        this.commandes = commandes.filter((commande:any) => commande.isActif && commande.isPrepare && commande.isLivre && !commande.isRegle);
+        this.commandes = commandes.filter((commande:any) => commande.isActif && commande.isPrepare && commande.isLivre && !commande.isRegle && !commande.isDeleted);
       }else{
         if (!isNaN(Number(this.tableSelection))) {
-          this.commandes = commandes.filter((commande:any) => commande.isActif && commande.isPrepare && commande.isLivre && !commande.isRegle && commande.numeroTable === this.tableSelection);
+          this.commandes = commandes.filter((commande:any) => commande.isActif && commande.isPrepare && commande.isLivre && !commande.isRegle && commande.numeroTable === this.tableSelection && !commande.isDeleted);
         }else{
-          this.commandes = commandes.filter((commande:any) => commande.isActif && commande.isPrepare && commande.isLivre && !commande.isRegle && commande.nomClientComptant == this.tableSelection);
+          this.commandes = commandes.filter((commande:any) => commande.isActif && commande.isPrepare && commande.isLivre && !commande.isRegle && commande.nomClientComptant == this.tableSelection && !commande.isDeleted);
         }
       }
       this.getTables(this.commandes);
     });
+  }
+
+  cloturer(commande : Commandes){
+    commande.isDeleted = true;
+    this.firestore.put(
+      CollectionName.Commandes,
+      commande.id,
+      commande
+    )
   }
 
   async getPlats(){
@@ -231,6 +240,8 @@ export class CommandeAReglerPage implements OnInit {
       this.ARegler = [];
       this.montantRendu = 0;
       this.groupeCommande = this.utility.generateKey(); // new groupeCommande
+      this.calculeTotalAPayer();
+      this.calculeTotalReglement();
       this.utility.popMessage('Les commandes ont bien été réglées');      
     }
   }
@@ -238,7 +249,7 @@ export class CommandeAReglerPage implements OnInit {
   async chooseModeReglement(){
     const alert = await this.alertController.create({
       cssClass: 'my-custom-class',
-      header: 'Ajouter une famille',
+      header: 'Choisir le mode de paiement',
       inputs: [
         {
           type : 'radio',
@@ -286,12 +297,13 @@ export class CommandeAReglerPage implements OnInit {
 
     const alert = await this.alertController.create({
       cssClass: 'my-custom-class',
-      header: 'Montant à régler',
+      header: 'Montant à régler ' + this.totalFacture + ' xpf',
       inputs: [
         {
           type : 'number',
           name : 'montant',
-          placeholder : 'Montant'
+          placeholder : 'Montant',
+          value : modeReglement !== ModeReglement.Espece ? Number(this.totalFacture) - Number(this.totalReglement) : ''
         }
       ],
       buttons: [

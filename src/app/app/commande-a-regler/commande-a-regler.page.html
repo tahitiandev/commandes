@@ -34,6 +34,7 @@
       <ion-item-option color="success" (click)="regler(commande)">Régler</ion-item-option>
     </ion-item-options>
     <ion-item-options side="start">
+      <ion-item-option color="dark" (click)="cloturer(commande)">Clôturer</ion-item-option>
       <ion-item-option color="success" (click)="passerEtapePreparation(commande)">Préparation</ion-item-option>
       <ion-item-option color="tertiary" (click)="passerEtapeLivraison(commande)">Livraison</ion-item-option>
     </ion-item-options>
@@ -65,8 +66,8 @@
       <ion-button color="dark" [disabled]="commandes.length === 0" (click)="toutSelectionnerDeselectionner(isToutSelectionner)">{{ isToutSelectionner ? 'Tout sélectionner' : 'Tout déselctionner' }}</ion-button>
       <ion-button [disabled]="ARegler.length === 0 || totalFacture === totalReglement" (click)="chooseModeReglement()" color="success">Régler</ion-button>
       <ion-button [disabled]="totalFacture === 0 || totalFacture > totalReglement" (click)="reglerMultiCommande()" color="success">{{ totalReglement > totalFacture ? 'Terminer avec rendu de ' + (totalReglement - totalFacture) + ' xpf' : 'Terminer'}}</ion-button>
-      <ion-button [disabled]="ARegler.length === 0" (click)="passerEtapePreparationMultiple()" color="primary">Etape Préparation</ion-button>
-      <ion-button [disabled]="ARegler.length === 0" (click)="passerEtapeLivraisonMultiple()" color="primary">Etape Livraison</ion-button>
+      <ion-button [disabled]="ARegler.length === 0 || detailReglements.length > 0" (click)="passerEtapePreparationMultiple()" color="primary">Etape Préparation</ion-button>
+      <ion-button [disabled]="ARegler.length === 0 || detailReglements.length > 0" (click)="passerEtapeLivraisonMultiple()" color="primary">Etape Livraison</ion-button>
     </div>
   </div>
   

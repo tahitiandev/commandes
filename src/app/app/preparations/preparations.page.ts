@@ -29,8 +29,17 @@ export class PreparationsPage implements OnInit {
 
   async getCommandes(){
     (await this.firestore.getAll(CollectionName.Commandes)).subscribe((commandes : any) => {
-      this.commandes = commandes.filter((commande:any) => commande.isActif && !commande.isPrepare);
+      this.commandes = commandes.filter((commande:any) => commande.isActif && !commande.isPrepare && !commande.isDeleted);
     });
+  }
+
+  cloturer(commande : Commandes){
+    commande.isDeleted = true;
+    this.firestore.put(
+      CollectionName.Commandes,
+      commande.id,
+      commande
+    )
   }
 
   async getPlats(){
