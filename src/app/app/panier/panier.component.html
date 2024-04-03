@@ -17,9 +17,14 @@
   
   <h4 style="text-align: right; padding-right: 2%;">Total : {{ calculeTotal() }} xpf</h4>
 
-  <div class="button">
-    <ion-button color="primary" (click)="fermer()">Revenir au menu</ion-button>
-    <ion-button color="warning" (click)="valider()">Valider</ion-button>
+  <div class="button" style="display: flex; flex-direction: column;">
+    <div>
+      <ion-button color="primary" (click)="fermer()"><< Revenir au menu</ion-button>
+    </div>
+    <div style="display: flex;">
+      <ion-button color="warning" (click)="chooseModeReglement()">Régler</ion-button>
+      <ion-button color="warning" (click)="valider()">Valider</ion-button>
+    </div>
   </div>
 
 </div>

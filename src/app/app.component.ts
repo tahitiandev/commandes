@@ -8,6 +8,7 @@ export class AppComponent {
   public appPagesSetting = [
     { title: 'Tables', url: 'tables', icon: 'mail' },
     { title: 'Menu', url: 'menus', icon: 'mail' },
+    { title: 'Familles', url: 'familles', icon: 'mail' },
     { title: 'Paramétrages', url: 'settings', icon: 'mail' },
   ];
 

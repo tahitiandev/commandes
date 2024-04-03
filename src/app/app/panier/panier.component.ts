@@ -1,8 +1,10 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { AlertController, NavController } from '@ionic/angular';
 import { CollectionName } from 'src/app/enums/CollectionName';
+import { ModeReglement } from 'src/app/enums/ModeReglements';
 import { Commandes } from 'src/app/models/Commandes';
 import { Plats } from 'src/app/models/Plats';
+import { Reglements } from 'src/app/models/Reglements';
 import { FirestoreService } from 'src/app/services/firestore.service';
 import { UtilityService } from 'src/app/services/utility.service';
 
@@ -110,7 +112,85 @@ export class PanierComponent  implements OnInit {
     }
 
     return total;
-}
+  }
+
+  async chooseModeReglement(){
+    const alert = await this.alertController.create({
+      cssClass: 'my-custom-class',
+      header: 'Choisir le mode de paiement',
+      inputs: [
+        {
+          type : 'radio',
+          label : 'Espèce',
+          value : ModeReglement.Espece
+        },
+        {
+          type : 'radio',
+          label : 'CB',
+          value : ModeReglement.CB
+        },
+        {
+          type : 'radio',
+          label : 'Carte local',
+          value : ModeReglement.CarteLocal
+        },
+        {
+          type : 'radio',
+          label : 'Virement',
+          value : ModeReglement.Virement
+        },
+      ],
+      buttons: [
+        {
+          text: 'Annuler',
+          role: 'cancel',
+          cssClass: 'secondary',
+          handler: () => {
+
+          }
+        }
+        ,{
+          text: 'Regler',
+          handler: async (modeReglement : ModeReglement) => {
+
+            var groupeCommande = this.utility.generateKey();
+
+            for(let commande of this.commandes){
+              commande.isActif = true;
+              commande.isLivre  = true;
+              commande.isPrepare = true;
+              commande.isRegle = true;
+              commande.groupeCommande = groupeCommande;
+              this.firestore.put(
+                CollectionName.Commandes,
+                commande.id,
+                commande
+              );
+            }
+
+            var reglement : Reglements = {
+              id : this.utility.generateKey(),
+              montant : this.calculeTotal(),
+              isRendu : false,
+              modeReglement : modeReglement,
+              groupeCommande : groupeCommande
+            }
+
+            this.firestore.post(
+              CollectionName.Reglements,
+              reglement,
+              reglement.id
+            )
+
+            this.utility.popMessage('Votre commande a bien été réglée');
+            this.nav.navigateRoot('comptoir')
+          }
+        }
+        
+      ]
+    });
+    await alert.present();
+  }
 
   valider(){
 

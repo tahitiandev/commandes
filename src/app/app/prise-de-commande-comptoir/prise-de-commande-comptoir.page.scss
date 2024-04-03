@@ -6,6 +6,12 @@
   
   ion-button {
     position: fixed;
-    bottom: 30px;
-    right: 10px;
+    bottom: 20px;
+    right: 25px;
+  }
+
+  @media screen and (max-width: 768px) {
+    ion-button{
+      right: 10px;
+    }
   }
