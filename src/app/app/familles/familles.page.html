@@ -16,7 +16,7 @@
       <ion-item button (click)="put(famille)">
         <ion-label>
           <h3 style="display: inline-block; margin-right: 10px;">
-            {{ famille.libelle }}
+            {{ famille.ordre }} - {{ famille.libelle }}
           </h3>
         </ion-label>
       </ion-item>
@@ -27,4 +27,8 @@
       </ion-item-options>
     </ion-item-sliding>
   </ion-list>
+
+  <div class="button-add">
+    <ion-button color="primary" (click)="post()">Ajouter</ion-button>
+  </div>
 </ion-content>

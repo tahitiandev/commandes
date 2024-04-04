@@ -2,6 +2,7 @@ import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { AlertController } from '@ionic/angular';
 import { CollectionName } from 'src/app/enums/CollectionName';
+import { Familles } from 'src/app/models/Familles';
 import { FirestoreService } from 'src/app/services/firestore.service';
 import { UtilityService } from 'src/app/services/utility.service';
 
@@ -63,6 +64,11 @@ export class PlatPostComponent  implements OnInit {
           type : 'text',
           name : 'libelle',
           placeholder : 'Libellé'
+        },
+        {
+          type : 'number',
+          name : 'ordre',
+          placeholder : 'Ordre'
         }
       ],
       buttons: [
@@ -80,13 +86,16 @@ export class PlatPostComponent  implements OnInit {
 
             if(result.libelle !== ""){
               var id = this.utility.generateKey();
+
+              var famille : Familles = {
+                id : id,
+                libelle : result.libelle,
+                ordre : result.ordre
+              }
   
               await this.firestore.post(
                 CollectionName.Familles,
-                {
-                  id : id,
-                  libelle : result.libelle
-                },
+                famille,
                 id
               )            
             }
