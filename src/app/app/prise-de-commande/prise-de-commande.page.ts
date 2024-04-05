@@ -59,6 +59,7 @@ export class PriseDeCommandePage implements OnInit {
 
   async getFamilles(){
     (await this.firestore.getAll(CollectionName.Familles)).subscribe((familles : any) => {
+      familles.sort((a: Familles, b: Familles) => a.ordre - b.ordre);
       this.familles = familles;
     });
   }
