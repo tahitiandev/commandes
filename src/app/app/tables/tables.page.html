@@ -35,11 +35,20 @@
   </ion-list>
 
   <div class="button-add-table" *ngIf="!isPostTable">
-    <ion-button color="primary" (click)="setIsPostTable()">Ajouter</ion-button>
+    <ion-button class="post-table" color="primary" (click)="setIsPostTable()">Ajouter</ion-button>
   </div>
 
   <app-tables-post *ngIf="isPostTable"
                  (tableOutput)="post($event)"
                  (annulerOutput)="setIsPostTable()"
                  [numeroTable]="numeroTable"></app-tables-post>
+
+  <ion-button color="primary" (click)="configEchelle()">Définir la map</ion-button>
+
+  <table>
+    <tr *ngFor="let colum of colums">
+      <td *ngFor="let ligne of lignes">{{ 0 }}</td>
+    </tr>
+  </table>
+
 </ion-content>

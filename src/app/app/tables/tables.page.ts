@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AlertController } from '@ionic/angular';
 import { CollectionName } from 'src/app/enums/CollectionName';
 import { Tables } from 'src/app/models/Tables';
 import { FirestoreService } from 'src/app/services/firestore.service';
@@ -21,14 +22,32 @@ export class TablesPage implements OnInit {
   tables : Array<Tables> = [];
   isPostTable = false;
   numeroTable : any;
+  ligneLenght = 5;
+  columsLenght = 5;
+  lignes : Array<number> = [];
+  colums : Array<number>  = [];
 
 
   constructor(private firestore : FirestoreService,
+              private alertController : AlertController,
               private utility : UtilityService) { }
 
   async ngOnInit() {
     await this.getTables();
     await this.generateNumeroTable();
+    this.refreshEchelle();
+    
+  }
+
+  refreshEchelle(){
+    this.lignes = [];
+    for(var i = 0; i < this.ligneLenght;i++){
+      this.lignes.push(i);
+    }
+    this.colums = [];
+    for(var i = 0; i < this.columsLenght;i++){
+      this.colums.push(i);
+    }
   }
 
   async getTables(){
@@ -95,6 +114,48 @@ export class TablesPage implements OnInit {
       table.id,
       table
     )
+  }
+
+  async configEchelle(){
+    const alert = await this.alertController.create({
+      cssClass: 'my-custom-class',
+      header: 'Choisir le mode de paiement',
+      inputs: [
+        {
+          type : 'number',
+          label : 'Ligne',
+          name: 'ligne',
+          value : this.ligneLenght
+        },
+        {
+          type : 'number',
+          label : 'Colonne',
+          name: 'colonne',
+          value : this.columsLenght
+        },
+      ],
+      buttons: [
+        {
+          text: 'Annuler',
+          role: 'cancel',
+          cssClass: 'secondary',
+          handler: () => {
+
+          }
+        }
+        ,{
+          text: 'Valider',
+          handler: result => {
+            this.ligneLenght = result.ligne;
+            this.columsLenght = result.colonne;
+            this.refreshEchelle();
+            
+          }
+        }
+        
+      ]
+    });
+    await alert.present();
   }
 
 }
